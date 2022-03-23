@@ -1,10 +1,17 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import Login from './containers/Login';
+import Register from './containers/Register';
 
 const App = () => {
   return (
-    <div className="bg-orange-400 min-h-screen flex items-center justify-center">
-      <h1 className="text-5xl font-bold text-white">Hello world!</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
