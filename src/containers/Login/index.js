@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { signIn } from '../../functions/authentication';
 
 const Login = () => {
   const auth = useAuth();
@@ -10,10 +9,6 @@ const Login = () => {
     password: '',
   });
 
-  useEffect(() => {
-    console.log(signInData);
-  }, [signInData]);
-
   const handleChangeSignInInput = (event) => {
     setSignInData({ ...signInData, [event.target.id]: event.target.value });
   };
@@ -21,11 +16,9 @@ const Login = () => {
   const handleSignIn = async (event) => {
     event.preventDefault();
     const { email, password } = signInData;
-    auth.setLoading(true);
     try {
-      await signIn(email, password);
+      await auth.signIn(email, password);
     } catch (err) {
-      auth.setLoading(false);
       alert(`Error: ${err.message}`);
     }
   };

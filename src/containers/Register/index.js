@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { signUp } from '../../functions/authentication/';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Register = () => {
-  let navigate = useNavigate();
+  const auth = useAuth();
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const signUpDataDefault = {
     email: '',
@@ -27,13 +29,13 @@ const Register = () => {
     const { email, password, firstName, lastName } = signUpData;
     const userData = { firstName, lastName };
     try {
-      setLoading(true)
-      await signUp(email, password, userData);
+      setLoading(true);
+      await auth.signUp(email, password, userData);
       navigate('/');
     } catch (err) {
+      console.error('error');
       console.error(err);
-      console.log('error');
-      setLoading(false)
+      setLoading(false);
       alert(`Error: ${err.message}`);
     }
   };

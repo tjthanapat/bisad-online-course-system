@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { signOut } from '../../functions/authentication';
 import { useAuth } from '../../contexts/AuthContext';
 import Login from '../Login';
 
@@ -8,7 +7,7 @@ const Home = () => {
 
   const handleSignOut = async () => {
     try {
-      await signOut();
+      await auth.signOut();
     } catch (err) {
       console.error(err);
     }
