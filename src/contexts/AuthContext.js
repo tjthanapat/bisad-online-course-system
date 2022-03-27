@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut as signOutFirebase,
   createUserWithEmailAndPassword,
+  getIdTokenResult,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -67,9 +68,15 @@ const useProvideAuth = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!!user) {
         console.log('Reading...');
-        getUserData(user.uid).then((userData) => {
-          setUser({ ...user, ...userData });
-          setLoading(false);
+        user.getIdTokenResult().then((idTokenResult) => {
+          getUserData(user.uid).then((userData) => {
+            setUser({
+              ...user,
+              ...userData,
+              admin: !!idTokenResult.claims.admin,
+            });
+            setLoading(false);
+          });
         });
       } else {
         setUser(user);

@@ -5,6 +5,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
 import Register from './containers/Register';
 import Home from './containers/Home';
+import AddAdmin from './containers/AddAdmin';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Register />} />
+          <Route path="/addadmin" element={<AddAdmin />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
