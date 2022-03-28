@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 const Register = () => {
@@ -39,8 +39,17 @@ const Register = () => {
       alert(`Error: ${err.message}`);
     }
   };
-  if (loading) {
+  if (auth.loading || loading) {
     return <p>Loading....</p>;
+  } else if (!!auth.user) {
+    return (
+      <div>
+        <p>You're signed in.</p>
+        <Link to="/">
+          <button>Home</button>
+        </Link>
+      </div>
+    );
   } else {
     return (
       <div className="bg-orange-400 min-h-screen flex items-center justify-center">
