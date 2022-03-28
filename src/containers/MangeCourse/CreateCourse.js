@@ -25,6 +25,7 @@ const CreateCourse = () => {
     try {
       setLoading(true);
       await createCourse(courseData);
+      setCourseData(courseDataDefault)
       setLoading(false);
     } catch (err) {
       console.error(err);
