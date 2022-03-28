@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 
 import './App.css';
-import Register from './containers/Register';
 import Home from './containers/Home';
+import Register from './containers/Register';
 import AddAdmin from './containers/AddAdmin';
+import CreateCourse from './containers/MangeCourse/CreateCourse';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/addadmin" element={<AddAdmin />} />
+          <Route path="/createcourse" element={<CreateCourse />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

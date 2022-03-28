@@ -5,7 +5,6 @@ import {
   signInWithEmailAndPassword,
   signOut as signOutFirebase,
   createUserWithEmailAndPassword,
-  getIdTokenResult,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import CourseList from '../CourseList';
 import Login from '../Login';
 
 const Home = () => {
@@ -19,8 +20,18 @@ const Home = () => {
     return (
       <div>
         <p>You're signed in.</p>
-        <p>Signed in as {auth.user.firstName} {auth.user.lastName}</p>
-        <button onClick={handleSignOut}>Sign out</button>
+        <p>
+          Signed in as {auth.user.firstName} {auth.user.lastName}
+        </p>
+        <p>Role: {auth.user.admin ? 'Admin' : 'User'}</p>
+        <button
+          onClick={handleSignOut}
+          className="rounded p-2 bg-orange-500 text-white uppercase"
+        >
+          Sign out
+        </button>
+        <hr className="my-5" />
+        <CourseList />
       </div>
     );
   } else {
