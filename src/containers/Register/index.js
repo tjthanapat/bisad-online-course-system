@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -15,10 +15,6 @@ const Register = () => {
     lastName: '',
   };
   const [signUpData, setSignUpData] = useState(signUpDataDefault);
-
-  useEffect(() => {
-    console.log(signUpData);
-  }, [signUpData]);
 
   const handleChangeSignUpInput = (event) => {
     setSignUpData({ ...signUpData, [event.target.id]: event.target.value });
