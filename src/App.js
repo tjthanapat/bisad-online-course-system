@@ -15,14 +15,15 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Register />} />
-          <Route path="/addadmin" element={<AddAdmin />} />
-          <Route path="/createcourse" element={<CreateCourse />} />
-          <Route
-            path="/course"
-            element={<p>Please select course from course list page.</p>}
-          />
-          <Route path="/course/:courseId" element={<Course />} />
+          <Route path="signup" element={<Register />} />
+          <Route path="addadmin" element={<AddAdmin />} />
+          <Route path="createcourse" element={<CreateCourse />} />
+          <Route path="course" element={<Outlet />}>
+            <Route path=""
+              element={<p>Please select course from course list page.</p>}
+            />
+            <Route path=":courseId/*" element={<Course />} />
+          </Route>
           <Route path="*" element={<p>404 Not Found!</p>} />
         </Routes>
       </BrowserRouter>

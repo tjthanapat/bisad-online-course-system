@@ -33,3 +33,20 @@ export const createCourse = async (courseData) => {
     throw err;
   }
 };
+
+export const updateCourse = async (courseId, courseData) => {
+  try {
+    const isThisCourseExist = await isCourseExist(courseId);
+    if (!isThisCourseExist) {
+      const err = new Error(
+        `Course with id '${courseId}' does not exists.`
+      );
+      throw err;
+    }
+    const docRef = doc(db, 'courses', courseId);
+    await setDoc(docRef, courseData);
+    console.log(`Updated course with id '${courseId}' successfully.`);
+  } catch (err) {
+    throw err;
+  }
+};
