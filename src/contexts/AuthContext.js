@@ -60,6 +60,7 @@ const useProvideAuth = () => {
       await writeUserData(user.uid, userData);
       return { ...user, ...userData };
     } catch (err) {
+      setLoading(false);
       throw err;
     }
   };
