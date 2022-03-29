@@ -8,6 +8,7 @@ import Register from './containers/Register';
 import AddAdmin from './containers/AddAdmin';
 import CreateCourse from './containers/MangeCourse/CreateCourse';
 import Course from './containers/Course';
+import Enroll from './containers/Enroll';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="signup" element={<Register />} />
           <Route path="addadmin" element={<AddAdmin />} />
           <Route path="createcourse" element={<CreateCourse />} />
+          <Route path="enroll" element={<Enroll />} />
           <Route path="course" element={<Outlet />}>
             <Route path=""
               element={<p>Please select course from course list page.</p>}
