@@ -25,7 +25,14 @@ const CreateCourse = () => {
     event.preventDefault();
     try {
       setLoading(true);
-      await createCourse(courseData);
+      const courseDataExcludeId = {
+        name: courseData.name,
+        description: courseData.description,
+        instructor: courseData.instructor,
+        coverImageUrl: courseData.coverImageUrl,
+        price: courseData.price
+      };
+      await createCourse(courseData.id, courseDataExcludeId);
       setCourseData(courseDataDefault);
       setLoading(false);
     } catch (err) {

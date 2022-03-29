@@ -4,9 +4,10 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const Register = () => {
   const auth = useAuth();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
   const signUpDataDefault = {
     email: '',
     password: '',
@@ -22,21 +23,33 @@ const Register = () => {
 
   const handleSignUp = async (event) => {
     event.preventDefault();
-    const { email, password, firstName, lastName } = signUpData;
+    const { email, password, passwordConfirmed, firstName, lastName } =
+      signUpData;
     const userData = { firstName, lastName };
     try {
       setLoading(true);
+      if (password !== passwordConfirmed) {
+        const err = new Error(`Password and confrim password don't match.`);
+        throw err;
+      }
       await auth.signUp(email, password, userData);
-      navigate('/');
-    } catch (err) {
-      console.error('error');
-      console.error(err);
       setLoading(false);
-      alert(`Error: ${err.message}`);
+      setSuccess(true);
+    } catch (err) {
+      console.error(err);
+      setError(err);
+      setLoading(false);
     }
   };
   if (auth.loading || loading) {
     return <p>Loading....</p>;
+  } else if (success) {
+    return (
+      <div>
+        <p>Signed up successfully.</p>
+        <Link to="/">Home</Link>
+      </div>
+    );
   } else if (!!auth.user) {
     return (
       <div>
@@ -107,6 +120,7 @@ const Register = () => {
                 required
               />
             </div>
+            {!!error && <p>{error.message}</p>}
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full mt-5"
