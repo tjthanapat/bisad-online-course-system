@@ -55,6 +55,7 @@ const useProvideAuth = () => {
 
   const signUp = async (email, password, userData) => {
     try {
+      setLoading(true);
       const user = await createUser(email, password);
       await writeUserData(user.uid, userData);
       return { ...user, ...userData };
