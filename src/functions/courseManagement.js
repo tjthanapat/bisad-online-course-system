@@ -22,8 +22,13 @@ export const createCourse = async (courseData) => {
       throw err;
     }
     const docRef = doc(db, 'courses', courseId);
-    await setDoc(docRef, courseData);
-    console.log(`Created course with id '${courseId}' successfully.`)
+    await setDoc(docRef, {
+      name: courseData.name,
+      description: courseData.description,
+      instructor: courseData.instructor,
+      coverImageUrl: courseData.coverImageUrl,
+    });
+    console.log(`Created course with id '${courseId}' successfully.`);
   } catch (err) {
     throw err;
   }
