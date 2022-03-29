@@ -21,6 +21,7 @@ const EditCourse = (props) => {
         description: courseData.description,
         instructor: courseData.instructor,
         coverImageUrl: courseData.coverImageUrl,
+        price: courseData.price
       };
       await updateCourse(courseData.id, courseDataExcludeId);
       setLoading(false);

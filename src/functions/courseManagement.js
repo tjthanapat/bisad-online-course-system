@@ -11,9 +11,8 @@ const isCourseExist = async (courseId) => {
   }
 };
 
-export const createCourse = async (courseData) => {
+export const createCourse = async (courseId, courseData) => {
   try {
-    const courseId = courseData.id;
     const isCourseIdValid = await isCourseExist(courseId);
     if (isCourseIdValid) {
       const err = new Error(
@@ -22,12 +21,7 @@ export const createCourse = async (courseData) => {
       throw err;
     }
     const docRef = doc(db, 'courses', courseId);
-    await setDoc(docRef, {
-      name: courseData.name,
-      description: courseData.description,
-      instructor: courseData.instructor,
-      coverImageUrl: courseData.coverImageUrl,
-    });
+    await setDoc(docRef, courseData);
     console.log(`Created course with id '${courseId}' successfully.`);
   } catch (err) {
     throw err;
@@ -38,9 +32,7 @@ export const updateCourse = async (courseId, courseData) => {
   try {
     const isThisCourseExist = await isCourseExist(courseId);
     if (!isThisCourseExist) {
-      const err = new Error(
-        `Course with id '${courseId}' does not exists.`
-      );
+      const err = new Error(`Course with id '${courseId}' does not exists.`);
       throw err;
     }
     const docRef = doc(db, 'courses', courseId);
