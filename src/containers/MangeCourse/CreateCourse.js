@@ -13,6 +13,7 @@ const CreateCourse = () => {
     description: '',
     instructor: '',
     coverImageUrl: '',
+    price: 0,
   };
   const [courseData, setCourseData] = useState(courseDataDefault);
 
@@ -25,7 +26,7 @@ const CreateCourse = () => {
     try {
       setLoading(true);
       await createCourse(courseData);
-      setCourseData(courseDataDefault)
+      setCourseData(courseDataDefault);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -86,6 +87,20 @@ const CreateCourse = () => {
                 rows={4}
                 value={courseData.description}
                 onChange={handleChangeCourseDataInput}
+              />
+            </div>
+            <div>
+              <label htmlFor="price">Price</label>
+              <input
+                type="number"
+                min={0}
+                step={0.01}
+                className="block p-2 rounded border w-full"
+                id="price"
+                placeholder="Price"
+                value={courseData.price}
+                onChange={handleChangeCourseDataInput}
+                required
               />
             </div>
             <div>
