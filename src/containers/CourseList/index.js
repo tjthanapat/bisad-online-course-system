@@ -22,10 +22,6 @@ const CourseList = () => {
     getCoursesData();
   }, []);
 
-  useEffect(() => {
-    console.log(courses);
-  }, [courses]);
-
   if (loading) {
     return <p>Loading</p>;
   } else {
@@ -46,7 +42,7 @@ const CourseCard = (props) => {
   const { id, name, instructor, description, coverImageUrl } = props.courseData;
   return (
     <div className="flex">
-      <div >
+      <div>
         <img src={coverImageUrl} className="h-48 w-48 object-cover" alt="" />
       </div>
       <div>
@@ -55,6 +51,9 @@ const CourseCard = (props) => {
         </p>
         <p>Instructor: {instructor}</p>
         <p>Description: {description}</p>
+        <Link to={`/course/${id}`}>
+          <button>View</button>
+        </Link>
       </div>
     </div>
   );

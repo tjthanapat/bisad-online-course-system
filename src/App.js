@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 
 import './App.css';
@@ -7,6 +7,7 @@ import Home from './containers/Home';
 import Register from './containers/Register';
 import AddAdmin from './containers/AddAdmin';
 import CreateCourse from './containers/MangeCourse/CreateCourse';
+import Course from './containers/Course';
 
 const App = () => {
   return (
@@ -17,6 +18,12 @@ const App = () => {
           <Route path="/signup" element={<Register />} />
           <Route path="/addadmin" element={<AddAdmin />} />
           <Route path="/createcourse" element={<CreateCourse />} />
+          <Route
+            path="/course"
+            element={<p>Please select course from course list page.</p>}
+          />
+          <Route path="/course/:courseId" element={<Course />} />
+          <Route path="*" element={<p>404 Not Found!</p>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
