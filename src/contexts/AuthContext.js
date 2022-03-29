@@ -68,7 +68,7 @@ const useProvideAuth = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!!user) {
-        console.log('Reading...');
+        console.log('Reading User Data...');
         user.getIdTokenResult().then((idTokenResult) => {
           getUserData(user.uid).then((userData) => {
             setUser({
