@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import CourseList from '../CourseList';
 import Login from '../Login';
@@ -21,7 +21,8 @@ const Home = () => {
       <div>
         <p>You're signed in.</p>
         <p>
-          Signed in as {auth.user.firstName} {auth.user.lastName}
+          Signed in as {auth.user.firstName} {auth.user.lastName} (
+          {auth.user.email})
         </p>
         <p>Role: {auth.user.admin ? 'Admin' : 'User'}</p>
         <button
