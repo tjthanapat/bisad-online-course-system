@@ -11,10 +11,20 @@ const isCourseExist = async (courseId) => {
   }
 };
 
+const isLessonExist = async (courseId, lessonId) => {
+  try {
+    const docRef = doc(db, 'courses', courseId, 'lessons', lessonId);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists();
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const createCourse = async (courseId, courseData) => {
   try {
-    const isCourseIdValid = await isCourseExist(courseId);
-    if (isCourseIdValid) {
+    const isCourseIdInvalid = await isCourseExist(courseId);
+    if (isCourseIdInvalid) {
       const err = new Error(
         `Course with id '${courseId}' already exists. Please try another id.`
       );
@@ -38,6 +48,30 @@ export const updateCourse = async (courseId, courseData) => {
     const docRef = doc(db, 'courses', courseId);
     await setDoc(docRef, courseData);
     console.log(`Updated course with id '${courseId}' successfully.`);
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const createLesson = async (courseId, lessonId, lessonData) => {
+  try {
+    const isThisCourseExist = await isCourseExist(courseId);
+    if (!isThisCourseExist) {
+      const err = new Error(`Course with id '${courseId}' does not exists.`);
+      throw err;
+    }
+    const isLessonIdInvalid = await isLessonExist(courseId, lessonId);
+    if (isLessonIdInvalid) {
+      const err = new Error(
+        `Lesson with id '${lessonId}' in course with id '${courseId}' already exists. Please try another id.`
+      );
+      throw err;
+    }
+    const docRef = doc(db, 'courses', courseId, 'lessons', lessonId);
+    await setDoc(docRef, lessonData);
+    console.log(
+      `Created lesson with id '${lessonId}' in course with id '${courseId}' successfully.`
+    );
   } catch (err) {
     throw err;
   }
