@@ -1,4 +1,3 @@
-import { async } from '@firebase/util';
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { createLesson } from '../../functions/courseManagement';
@@ -11,7 +10,7 @@ const CreateLesson = (props) => {
     id: '',
     name: '',
     description: '',
-    type: '',
+    type: 'video',
     url: '',
   };
   const [lessonData, setLessonData] = useState(lessonDataDefault);

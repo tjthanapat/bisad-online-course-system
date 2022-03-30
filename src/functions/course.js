@@ -30,3 +30,17 @@ export const getCourse = async (courseId) => {
     throw err;
   }
 };
+
+export const getLessons = async (courseId) => {
+  try {
+    const q = query(collection(db, 'courses', courseId, 'lessons'));
+    const querySnapshot = await getDocs(q);
+    let lessons = [];
+    querySnapshot.forEach((doc) => {
+      lessons.push({ ...doc.data(), id: doc.id });
+    });
+    return lessons;
+  } catch (err) {
+    throw err;
+  }
+};

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { getCourse } from '../../functions/course';
+import { getCourse, getLessons } from '../../functions/course';
 import CreateLesson from '../MangeCourse/CreateLesson';
 import EditCourse from '../MangeCourse/EditCourse';
 import CoursePage from './CoursePage';
@@ -14,13 +14,16 @@ const Course = () => {
   const [error, setError] = useState(null);
 
   const [course, setCourse] = useState({});
+  const [lessons, setLessons] = useState([]);
 
   useEffect(() => {
     const getCourseData = async () => {
       try {
         setLoading(true);
         const courseData = await getCourse(courseId);
+        const lessonsData = await getLessons(courseId);
         setCourse(courseData);
+        setLessons(lessonsData);
       } catch (err) {
         setError(err);
       } finally {
@@ -43,14 +46,15 @@ const Course = () => {
   } else {
     return (
       <Routes>
-        <Route path='' element={<CoursePage course={course} />} />
-        <Route path='edit' element={<EditCourse course={course}/>} />
-        <Route path='createlesson' element={<CreateLesson course={course}/>} />
+        <Route
+          path=""
+          element={<CoursePage course={course} lessons={lessons} />}
+        />
+        <Route path="edit" element={<EditCourse course={course} />} />
+        <Route path="createlesson" element={<CreateLesson course={course} />} />
       </Routes>
     );
   }
 };
-
-
 
 export default Course;
