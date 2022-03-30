@@ -76,3 +76,27 @@ export const createLesson = async (courseId, lessonId, lessonData) => {
     throw err;
   }
 };
+
+export const updateLesson = async (courseId, lessonId, lessonData) => {
+  try {
+    const isThisCourseExist = await isCourseExist(courseId);
+    if (!isThisCourseExist) {
+      const err = new Error(`Course with id '${courseId}' does not exists.`);
+      throw err;
+    }
+    const isThisLessonExist = await isLessonExist(courseId, lessonId);
+    if (!isThisLessonExist) {
+      const err = new Error(
+        `Lesson with id '${lessonId}' in course with id '${courseId}' does not exist.`
+      );
+      throw err;
+    }
+    const docRef = doc(db, 'courses', courseId, 'lessons', lessonId);
+    await setDoc(docRef, lessonData);
+    console.log(
+      `Updated lesson with id '${lessonId}' in course with id '${courseId}' successfully.`
+    );
+  } catch (err) {
+    throw err;
+  }
+};

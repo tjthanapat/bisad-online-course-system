@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { createLesson } from '../../functions/courseManagement';
+import { updateLesson } from '../../functions/courseManagement';
 
-const CreateLesson = (props) => {
+const EditLesson = (props) => {
   const auth = useAuth();
-  const { course } = props;
+  const { course, lesson } = props;
   const [loading, setLoading] = useState(false);
-  const lessonDataDefault = {
-    id: '',
-    name: '',
-    description: '',
-    type: 'video',
-    source: '',
-  };
-  const [lessonData, setLessonData] = useState(lessonDataDefault);
+
+  const [lessonData, setLessonData] = useState(lesson);
 
   const handleChangeLessonDataInput = (event) => {
     setLessonData({ ...lessonData, [event.target.id]: event.target.value });
@@ -33,7 +27,7 @@ const CreateLesson = (props) => {
         type: lessonData.type,
         source: lessonData.source,
       };
-      await createLesson(course.id, lessonData.id, lessonDataExcludeId);
+      await updateLesson(course.id, lessonData.id, lessonDataExcludeId);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -48,7 +42,7 @@ const CreateLesson = (props) => {
       <div className="bg-orange-400 min-h-screen px-5 py-10">
         <div className="max-w-screen-lg bg-white p-5 mx-auto rounded-lg">
           <h1 className="text-2xl font-medium">
-            Create New Lesson in {course.name} (id: {course.id})
+            Edit Lesson in {course.name} (id: {course.id})
           </h1>
           <form onSubmit={handleSubmitCreateLesson}>
             <div>
@@ -59,8 +53,7 @@ const CreateLesson = (props) => {
                 id="id"
                 placeholder="Lesson ID"
                 value={lessonData.id}
-                onChange={handleChangeLessonDataInput}
-                required
+                disabled
               />
             </div>
             <div>
@@ -127,7 +120,7 @@ const CreateLesson = (props) => {
               type="submit"
               className="mt-10 rounded p-2 bg-orange-500 text-white uppercase"
             >
-              Create
+              Save
             </button>
           </form>
         </div>
@@ -138,4 +131,4 @@ const CreateLesson = (props) => {
   }
 };
 
-export default CreateLesson;
+export default EditLesson;

@@ -22,7 +22,7 @@ const CoursePage = (props) => {
           <p>Price: {price} baht</p>
           {!!auth.user.admin ? (
             <Link to={`/course/${id}/edit`}>
-              <button className="rounded-full py-1 px-5 bg-blue-500 hover:bg-blue-600 text-white">
+              <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
                 Edit
               </button>
             </Link>
@@ -55,6 +55,7 @@ const CoursePage = (props) => {
 };
 
 const LessonItem = (props) => {
+  const auth = useAuth();
   const { courseId } = props;
   const { id, name } = props.lesson;
   return (
@@ -63,10 +64,17 @@ const LessonItem = (props) => {
         {name} (id: {id})
       </p>
       <Link to={`/course/${courseId}/lesson/${id}`}>
-        <button className="rounded-full py-1 px-5 bg-blue-500 hover:bg-blue-600 text-white">
+        <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
           View
         </button>
       </Link>
+      {auth.user.admin && (
+        <Link to={`/course/${courseId}/lesson/${id}/edit`}>
+          <button className="rounded-full py-1 px-5 bg-blue-500 hover:bg-blue-600 text-white">
+            Edit
+          </button>
+        </Link>
+      )}
     </div>
   );
 };
