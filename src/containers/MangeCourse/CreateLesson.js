@@ -4,8 +4,11 @@ import { createLesson } from '../../functions/courseManagement';
 
 const CreateLesson = (props) => {
   const auth = useAuth();
+
   const { course } = props;
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
   const lessonDataDefault = {
     id: '',
     name: '',
@@ -34,6 +37,7 @@ const CreateLesson = (props) => {
         source: lessonData.source,
       };
       await createLesson(course.id, lessonData.id, lessonDataExcludeId);
+      setSuccess(true);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -41,8 +45,16 @@ const CreateLesson = (props) => {
       alert(err.message);
     }
   };
+  
   if (auth.loading || loading) {
     return <p>Loading...</p>;
+  } else if (success) {
+    return (
+      <div>
+        <p>Created new lesson successfully.</p>
+        <a href={`/course/${course.id}`}>Back to course page</a>
+      </div>
+    );
   } else if (!!auth.user && auth.user.admin) {
     return (
       <div className="bg-orange-400 min-h-screen px-5 py-10">

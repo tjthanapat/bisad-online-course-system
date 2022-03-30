@@ -6,6 +6,7 @@ const EditLesson = (props) => {
   const auth = useAuth();
   const { course, lesson } = props;
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const [lessonData, setLessonData] = useState(lesson);
 
@@ -28,6 +29,7 @@ const EditLesson = (props) => {
         source: lessonData.source,
       };
       await updateLesson(course.id, lessonData.id, lessonDataExcludeId);
+      setSuccess(true);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -35,8 +37,16 @@ const EditLesson = (props) => {
       alert(err.message);
     }
   };
+  
   if (auth.loading || loading) {
     return <p>Loading...</p>;
+  } else if (success) {
+    return (
+      <div>
+        <p>Updated lesson successfully.</p>
+        <a href={`/course/${course.id}`}>Back to course page</a>
+      </div>
+    );
   } else if (!!auth.user && auth.user.admin) {
     return (
       <div className="bg-orange-400 min-h-screen px-5 py-10">

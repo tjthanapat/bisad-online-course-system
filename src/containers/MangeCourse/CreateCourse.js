@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { createCourse } from '../../functions/courseManagement';
 
@@ -6,6 +7,7 @@ const CreateCourse = () => {
   const auth = useAuth();
 
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const courseDataDefault = {
     id: '',
@@ -30,10 +32,10 @@ const CreateCourse = () => {
         description: courseData.description,
         instructor: courseData.instructor,
         coverImageUrl: courseData.coverImageUrl,
-        price: courseData.price
+        price: courseData.price,
       };
       await createCourse(courseData.id, courseDataExcludeId);
-      setCourseData(courseDataDefault);
+      setSuccess(true);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -44,7 +46,15 @@ const CreateCourse = () => {
 
   if (auth.loading || loading) {
     return <p>Loading...</p>;
-  } else if (!!auth.user && auth.user.admin) {
+  } else if (success) {
+    return (
+      <div>
+        <p>Created new course successfully.</p>
+        <Link to="/">Back to home</Link>
+      </div>
+    );
+  }
+  if (!!auth.user && auth.user.admin) {
     return (
       <div className="bg-orange-400 min-h-screen px-5 py-10">
         <div className="max-w-screen-lg bg-white p-5 mx-auto rounded-lg">
