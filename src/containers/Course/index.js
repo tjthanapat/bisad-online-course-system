@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Outlet, Route, Routes, useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { getCourse, getLessons } from '../../functions/course';
+import Lesson from '../Lesson';
 import CreateLesson from '../MangeCourse/CreateLesson';
 import EditCourse from '../MangeCourse/EditCourse';
 import CoursePage from './CoursePage';
@@ -52,6 +53,16 @@ const Course = () => {
         />
         <Route path="edit" element={<EditCourse course={course} />} />
         <Route path="createlesson" element={<CreateLesson course={course} />} />
+        <Route path="lesson" element={<Outlet />}>
+          <Route
+            path=""
+            element={<p>Please select lesson from course page.</p>}
+          />
+          <Route
+            path=":lessonId/*"
+            element={<Lesson course={course} lessons={lessons} />}
+          />
+        </Route>
       </Routes>
     );
   }

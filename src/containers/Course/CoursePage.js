@@ -47,14 +47,28 @@ const CoursePage = (props) => {
 
         {!!lessons &&
           lessons.map((lesson) => (
-            <div key={lesson.id}>
-              <p>
-                Lesson: {lesson.name} (id: {lesson.id})
-              </p>
-            </div>
+            <LessonItem key={lesson.id} courseId={id} lesson={lesson} />
           ))}
       </div>
     </>
   );
 };
+
+const LessonItem = (props) => {
+  const { courseId } = props;
+  const { id, name } = props.lesson;
+  return (
+    <div>
+      <p>
+        {name} (id: {id})
+      </p>
+      <Link to={`/course/${courseId}/lesson/${id}`}>
+        <button className="rounded-full py-1 px-5 bg-blue-500 hover:bg-blue-600 text-white">
+          View
+        </button>
+      </Link>
+    </div>
+  );
+};
+
 export default CoursePage;
