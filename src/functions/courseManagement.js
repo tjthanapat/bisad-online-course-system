@@ -1,5 +1,5 @@
 import { db } from '../firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 const isCourseExist = async (courseId) => {
   try {
@@ -46,7 +46,7 @@ export const updateCourse = async (courseId, courseData) => {
       throw err;
     }
     const docRef = doc(db, 'courses', courseId);
-    await setDoc(docRef, courseData);
+    await updateDoc(docRef, courseData);
     console.log(`Updated course with id '${courseId}' successfully.`);
   } catch (err) {
     throw err;
@@ -92,7 +92,7 @@ export const updateLesson = async (courseId, lessonId, lessonData) => {
       throw err;
     }
     const docRef = doc(db, 'courses', courseId, 'lessons', lessonId);
-    await setDoc(docRef, lessonData);
+    await updateDoc(docRef, lessonData);
     console.log(
       `Updated lesson with id '${lessonId}' in course with id '${courseId}' successfully.`
     );
