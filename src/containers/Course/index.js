@@ -51,7 +51,10 @@ const Course = () => {
           path=""
           element={<CoursePage course={course} lessons={lessons} />}
         />
-        <Route path="edit" element={<EditCourse course={course} />} />
+        <Route
+          path="edit"
+          element={<EditCourse course={course} setCourse={setCourse} />}
+        />
         <Route path="createlesson" element={<CreateLesson course={course} />} />
         <Route path="lesson" element={<Outlet />}>
           <Route

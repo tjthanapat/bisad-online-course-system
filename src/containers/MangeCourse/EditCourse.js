@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { updateCourse } from '../../functions/courseManagement';
 
@@ -6,6 +7,7 @@ const EditCourse = (props) => {
   const auth = useAuth();
 
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [courseData, setCourseData] = useState(props.course);
 
   const handleChangeCourseDataInput = (event) => {
@@ -21,9 +23,11 @@ const EditCourse = (props) => {
         description: courseData.description,
         instructor: courseData.instructor,
         coverImageUrl: courseData.coverImageUrl,
-        price: courseData.price
+        price: courseData.price,
       };
       await updateCourse(courseData.id, courseDataExcludeId);
+      props.setCourse(courseData);
+      setSuccess(true);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -34,6 +38,13 @@ const EditCourse = (props) => {
 
   if (auth.loading || loading) {
     return <p>Loading...</p>;
+  } else if (success) {
+    return (
+      <div>
+        <p>Updated course with id '{courseData.id}' successfully.</p>
+        <Link to={`/course/${courseData.id}`}>Go back to course page.</Link>
+      </div>
+    );
   } else if (!!auth.user && auth.user.admin) {
     return (
       <div className="bg-orange-400 min-h-screen px-5 py-10">

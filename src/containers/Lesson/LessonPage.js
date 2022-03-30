@@ -9,6 +9,7 @@ const LessonPage = (props) => {
       <p>
         id: {lesson.id} | course: {course.name}
       </p>
+      <p>Description: {lesson.description}</p>
       <p>Type: {lesson.type}</p>
       {lesson.type === 'video' && (
         <iframe
