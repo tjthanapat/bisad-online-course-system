@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Enroll = () => {
+const Enroll = (props) => {
+    const { course } = props;
+    console.log(`You're enrolling course with id '${course.id}'`)
 
     return (
         <div className="bg-orange-400 min-h-screen flex items-center justify-center">

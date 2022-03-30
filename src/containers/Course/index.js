@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, Route, Routes, useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { getCourse, getLessons } from '../../functions/course';
+import Enroll from '../Enroll';
 import Lesson from '../Lesson';
 import CreateLesson from '../MangeCourse/CreateLesson';
 import EditCourse from '../MangeCourse/EditCourse';
@@ -55,6 +56,7 @@ const Course = () => {
           path="edit"
           element={<EditCourse course={course} setCourse={setCourse} />}
         />
+        <Route path="enroll" element={<Enroll course={course} />} />
         <Route path="createlesson" element={<CreateLesson course={course} />} />
         <Route path="lesson" element={<Outlet />}>
           <Route
