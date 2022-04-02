@@ -7,7 +7,7 @@ const Enroll = (props) => {
     const auth = useAuth();
     const { course } = props;
     const enrollmentData = {
-        id: '',
+        id: course.id + "_" + auth.user.uid,
         course_id: '',
         uid: '',
         enroll_price: '',

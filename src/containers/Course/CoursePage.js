@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { isEnrollExist } from '../../functions/enroll';
 
 const CoursePage = (props) => {
     const auth = useAuth();
     const { id, name, instructor, description, price, coverImageUrl } =
         props.course;
-    const { lessons } = props;
+    const { lessons, course } = props;
+    const [label, setLabel] = useState()
+    useEffect(() => {
+        const check_enroll = async () => {
+            var id = course.id + "_" + auth.user.uid;
+            const isEnrollmentIdInvalid = await isEnrollExist(id);
+            if (isEnrollmentIdInvalid) {
+                setLabel("Study");
+            } else {
+                setLabel("Enroll");
+            }
+        }; check_enroll();
+    });
     return (
         <>
             <div className="flex">
@@ -27,9 +40,9 @@ const CoursePage = (props) => {
                             </button>
                         </Link>
                     ) : (
-                        <Link to={`/course/${id}/enroll`}>
+                        <Link to={`/course/${id}/${label}`}>
                             <button className="rounded-full py-1 px-5 bg-blue-500 hover:bg-blue-600 text-white">
-                                Enroll
+                                {label}
                             </button>
                         </Link>
                     )}
