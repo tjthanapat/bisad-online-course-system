@@ -18,22 +18,27 @@ const Home = () => {
     return <p>Loading...</p>;
   } else if (!!auth.user) {
     return (
-      <div>
-        <p>You're signed in.</p>
-        <p>
-          Signed in as {auth.user.firstName} {auth.user.lastName} (
-          {auth.user.email})
-        </p>
-        <p>Role: {auth.user.admin ? 'Admin' : 'User'}</p>
-        <button
-          onClick={handleSignOut}
-          className="rounded p-2 bg-orange-500 text-white uppercase"
-        >
-          Sign out
-        </button>
-        <hr className="my-5" />
+      <>
+        <div className="bg-orange-400">
+          <div className="flex justify-between max-w-screen-lg mx-auto p-5">
+            <h1 className="font-medium text-white text-2xl">Courseiku</h1>
+            <button
+              onClick={handleSignOut}
+              className="rounded p-2 bg-white bg-opacity-10 hover:bg-opacity-25 text-white uppercase"
+            >
+              Sign out
+            </button>
+          </div>
+        </div>
+        <div className="max-w-screen-lg mx-auto my-5 px-5">
+          <p className="md:text-right">
+            Signed in as {auth.user.firstName} {auth.user.lastName} (
+            {auth.user.email})
+          </p>
+          <hr className="my-5" />
+        </div>
         <CourseList />
-      </div>
+      </>
     );
   } else {
     return <Login />;

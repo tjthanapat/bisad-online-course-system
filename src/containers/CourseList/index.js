@@ -23,16 +23,29 @@ const CourseList = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading</p>;
+    return (
+      <div className="max-w-screen-lg mx-auto px-5">
+        <p>Loading</p>
+      </div>
+    );
   } else {
     return (
-      <div>
-        <p>{!!auth.user.admin ? 'Admin UI' : 'Student UI'}</p>
-        {!!auth.user.admin && <Link to="/createcourse">Create New Course</Link>}
-        {!!courses &&
-          courses.map((course) => (
-            <CourseCard key={course.id} courseData={course} />
-          ))}
+      <div className="max-w-screen-lg mx-auto px-5">
+        {!!auth.user.admin && (
+          <div className="flex justify-end">
+            <Link to="/createcourse">
+              <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
+                Create New Course
+              </button>
+            </Link>
+          </div>
+        )}
+        <div className="my-5">
+          {!!courses &&
+            courses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
+        </div>
       </div>
     );
   }
@@ -40,34 +53,33 @@ const CourseList = () => {
 
 const CourseCard = (props) => {
   const auth = useAuth();
-  const { id, name, instructor, description, coverImageUrl } = props.courseData;
+  const { course } = props;
   return (
-    <div className="flex border rounded-lg m-3">
-      <div>
+    <div className="flex flex-col md:flex-row border rounded-lg my-5">
+      <div className="h-48 md:w-72">
         <img
-          src={coverImageUrl}
-          className="h-48 w-72 object-cover rounded-l-lg"
+          src={course.coverImageUrl}
+          className="h-full w-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
           alt=""
         />
       </div>
       <div className="p-5">
-        <p>
-          {name} (id: {id})
-        </p>
-        <p>Instructor: {instructor}</p>
-        <p>Description: {description}</p>
-        <Link to={`/course/${id}`}>
-          <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
-            View
-          </button>
-        </Link>
-        {!!auth.user.admin && (
-          <Link to={`/course/${id}/edit`}>
-            <button className="rounded-full py-1 px-5 ml-3 bg-blue-500 hover:bg-blue-600 text-white">
-              Edit
+        <h3 className="font-medium text-xl">{course.name}</h3>
+        <p className="truncate">{course.description}</p>
+        <div className="mt-5">
+          <Link to={`/course/${course.id}`}>
+            <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
+              View
             </button>
           </Link>
-        )}
+          {!!auth.user.admin && (
+            <Link to={`/course/${course.id}/edit`}>
+              <button className="rounded-full py-1 px-5 ml-3 bg-blue-500 hover:bg-blue-600 text-white">
+                Edit
+              </button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );
