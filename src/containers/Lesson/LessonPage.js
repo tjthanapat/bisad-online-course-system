@@ -22,6 +22,8 @@ const LessonPage = (props) => {
     };
     if (enrolled) {
       saveLog();
+    } else {
+      setLoading(false);
     }
   }, []);
 
