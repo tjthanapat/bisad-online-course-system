@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, Route, Routes, useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { getCourse, getLessons } from '../../functions/course';
+import { isEnrollmentExist } from '../../functions/enroll';
 import Enroll from '../Enroll';
 import Lesson from '../Lesson';
 import CreateLesson from '../MangeCourse/CreateLesson';
@@ -14,6 +15,7 @@ const Course = () => {
   const courseId = params.courseId;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [enrolled, setEnrolled] = useState(false);
 
   const [course, setCourse] = useState({});
   const [lessons, setLessons] = useState([]);
@@ -24,8 +26,11 @@ const Course = () => {
         setLoading(true);
         const courseData = await getCourse(courseId);
         const lessonsData = await getLessons(courseId);
+        const enrollmentId = `${auth.user.uid}_${courseId}`;
+        const isEnrolled = await isEnrollmentExist(enrollmentId);
         setCourse(courseData);
         setLessons(lessonsData);
+        setEnrolled(isEnrolled);
       } catch (err) {
         setError(err);
       } finally {
@@ -50,13 +55,18 @@ const Course = () => {
       <Routes>
         <Route
           path=""
-          element={<CoursePage course={course} lessons={lessons} />}
+          element={
+            <CoursePage course={course} lessons={lessons} enrolled={enrolled} />
+          }
         />
         <Route
           path="edit"
           element={<EditCourse course={course} setCourse={setCourse} />}
         />
-        <Route path="enroll" element={<Enroll course={course} />} />
+        <Route
+          path="enroll"
+          element={<Enroll course={course} enrolled={enrolled} setEnrolled={setEnrolled}/>}
+        />
         <Route path="createlesson" element={<CreateLesson course={course} />} />
         <Route path="lesson" element={<Outlet />}>
           <Route
@@ -65,7 +75,7 @@ const Course = () => {
           />
           <Route
             path=":lessonId/*"
-            element={<Lesson course={course} lessons={lessons} />}
+            element={<Lesson course={course} lessons={lessons} enrolled={enrolled}/>}
           />
         </Route>
       </Routes>
