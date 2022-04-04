@@ -25,7 +25,7 @@ const LessonPage = (props) => {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [enrolled]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -41,6 +41,7 @@ const LessonPage = (props) => {
         <p>Type: {lesson.type}</p>
         {lesson.type === 'video' && (
           <iframe
+            title={lesson.name}
             id="ytplayer"
             type="text/html"
             width="100%"
@@ -54,7 +55,7 @@ const LessonPage = (props) => {
           <div>
             <p>
               Download:{' '}
-              <a href={lesson.source} target="_blank">
+              <a href={lesson.source} target="_blank" rel="noreferrer">
                 Click here
               </a>
             </p>
