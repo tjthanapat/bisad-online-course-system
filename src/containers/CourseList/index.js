@@ -35,7 +35,7 @@ const CourseList = () => {
           <div className="flex justify-end">
             <Link to="/createcourse">
               <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
-                Create New Course
+                สร้างคอร์สเรียนใหม่
               </button>
             </Link>
           </div>
@@ -69,13 +69,13 @@ const CourseCard = (props) => {
         <div className="mt-5">
           <Link to={`/course/${course.id}`}>
             <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
-              View
+              ดูรายละเอียด
             </button>
           </Link>
           {!!auth.user.admin && (
             <Link to={`/course/${course.id}/edit`}>
               <button className="rounded-full py-1 px-5 ml-3 bg-blue-500 hover:bg-blue-600 text-white">
-                Edit
+                แก้ไข
               </button>
             </Link>
           )}
