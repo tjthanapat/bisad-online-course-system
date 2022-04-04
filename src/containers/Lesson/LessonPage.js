@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+// import { saveLearningLog } from '../../functions/learningLogAndProgress';
 
 const LessonPage = (props) => {
   const auth = useAuth();
-  const { lesson, course, enrolled} = props;
+  const { lesson, course, enrolled } = props;
 
-  if (auth.user.admin || enrolled) {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const saveLog = async () => {
+      try {
+        // await saveLearningLog(auth.user.uid, course.id, lesson.id);
+        console.log('Saved learning log successfully.');
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    };
+    if (enrolled) {
+      saveLog();
+    }
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  } else if (auth.user.admin || enrolled) {
     return (
       <div>
+        <Link to={`/course/${course.id}`}>Back to Course Page</Link>
         <h1>{lesson.name}</h1>
         <p>
           id: {lesson.id} | course: {course.name}
