@@ -60,7 +60,7 @@ const CourseCard = (props) => {
         <img
           src={course.coverImageUrl}
           className="h-full w-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
-          alt=""
+          alt={course.name}
         />
       </div>
       <div className="p-5">
