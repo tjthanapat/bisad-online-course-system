@@ -1,8 +1,9 @@
 import React from 'react';
-import Loading from '../../components/Loading';
 import { useAuth } from '../../contexts/AuthContext';
+import { Navigate } from "react-router-dom";
+
 import CourseList from '../CourseList';
-import Login from '../Login';
+import Loading from '../../components/Loading';
 
 const Home = () => {
   const auth = useAuth();
@@ -42,7 +43,7 @@ const Home = () => {
       </>
     );
   } else {
-    return <Login />;
+    return <Navigate to="/login" replace />;
   }
 };
 

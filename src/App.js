@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 
 import './App.css';
 import Home from './containers/Home';
+import Login from './containers/Login';
 import Register from './containers/Register';
 import AddAdmin from './containers/AddAdmin';
 import CreateCourse from './containers/MangeCourse/CreateCourse';
@@ -22,6 +23,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="signup" element={<Register />} />
+            <Route path="login" element={<Login />} />
             <Route path="loading" element={<Loading />} />
             <Route path="addadmin" element={<AddAdmin />} />
             <Route path="createcourse" element={<CreateCourse />} />
