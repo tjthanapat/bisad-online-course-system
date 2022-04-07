@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 const Login = () => {
   const auth = useAuth();
   const [signInData, setSignInData] = useState({
@@ -24,43 +27,57 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-orange-400 min-h-screen flex items-center justify-center">
-      <div>
-        <h1 className="text-5xl font-bold text-white mb-5">Login!</h1>
+    <div className="bg-orange-400 min-h-screen flex items-center justify-center p-5">
+      <div
+        className="bg-white px-5 py-8 rounded-lg"
+        style={{ minWidth: '300px' }}
+      >
+        <h1 className="text-2xl font-semibold mb-5">Courseiku</h1>
         <form onSubmit={handleSignIn}>
-          <div>
-            <input
-              type="email"
-              className="rounded p-2"
+          <div className="my-3">
+            <TextField
               id="email"
-              placeholder="email"
               value={signInData.email}
               onChange={handleChangeSignInInput}
+              label="อีเมล"
+              variant="standard"
               required
+              fullWidth
             />
           </div>
-          <div className="mt-3">
-            <input
-              type="password"
-              className="rounded p-2"
+          <div className="my-3">
+            <TextField
               id="password"
-              placeholder="password"
               value={signInData.password}
               onChange={handleChangeSignInInput}
+              label="รหัสผ่าน"
+              variant="standard"
+              type={'password'}
               required
+              fullWidth
             />
           </div>
-          <button
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            fullWidth
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full mt-5"
           >
-            Login
-          </button>
+            เข้าสู่ระบบ
+          </Button>
         </form>
         <Link to="/signup">
-          <button className="bg-white hover:bg-gray-300 font-bold py-2 px-4 rounded-full w-full mt-2">
-            Register
-          </button>
+          <Button
+            variant="contained"
+            color="secondary"
+            disableElevation
+            fullWidth
+            type="submit"
+            sx={{marginTop:'0.5rem'}}
+          >
+            สมัครสมาชิก
+          </Button>
         </Link>
       </div>
     </div>

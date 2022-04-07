@@ -1,4 +1,5 @@
 import React from 'react';
+import Loading from '../../components/Loading';
 import { useAuth } from '../../contexts/AuthContext';
 import CourseList from '../CourseList';
 import Login from '../Login';
@@ -15,7 +16,7 @@ const Home = () => {
   };
 
   if (auth.loading) {
-    return <p>Loading...</p>;
+    return <Loading/>;
   } else if (!!auth.user) {
     return (
       <>
