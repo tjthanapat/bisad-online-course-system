@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { getCourses } from '../../functions/course';
 
+import Button from '@mui/material/Button';
+
+import CourseCard from './CourseCard';
+
 const CourseList = () => {
   const auth = useAuth();
   const [loading, setLoading] = useState(true);
@@ -24,8 +28,14 @@ const CourseList = () => {
 
   if (loading) {
     return (
-      <div className="max-w-screen-lg mx-auto px-5">
-        <p>Loading</p>
+      <div className="flex flex-col items-center justify-center my-10">
+        <div className="lds-ellipsis">
+          <div className="orange"></div>
+          <div className="orange"></div>
+          <div className="orange"></div>
+          <div className="orange"></div>
+        </div>
+        <p>กำลังโหลด</p>
       </div>
     );
   } else {
@@ -34,9 +44,14 @@ const CourseList = () => {
         {!!auth.user.admin && (
           <div className="flex justify-end">
             <Link to="/createcourse">
-              <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
+              <Button
+                variant="contained"
+                color="primary"
+                disableElevation
+                type="submit"
+              >
                 สร้างคอร์สเรียนใหม่
-              </button>
+              </Button>
             </Link>
           </div>
         )}
@@ -49,40 +64,6 @@ const CourseList = () => {
       </div>
     );
   }
-};
-
-const CourseCard = (props) => {
-  const auth = useAuth();
-  const { course } = props;
-  return (
-    <div className="flex flex-col md:flex-row border rounded-lg my-5">
-      <div className="h-48 md:w-72">
-        <img
-          src={course.coverImageUrl}
-          className="h-full w-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
-          alt={course.name}
-        />
-      </div>
-      <div className="p-5">
-        <h3 className="font-medium text-xl">{course.name}</h3>
-        <p className="truncate">{course.description}</p>
-        <div className="mt-5">
-          <Link to={`/course/${course.id}`}>
-            <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
-              ดูรายละเอียด
-            </button>
-          </Link>
-          {!!auth.user.admin && (
-            <Link to={`/course/${course.id}/edit`}>
-              <button className="rounded-full py-1 px-5 ml-3 bg-blue-500 hover:bg-blue-600 text-white">
-                แก้ไข
-              </button>
-            </Link>
-          )}
-        </div>
-      </div>
-    </div>
-  );
 };
 
 export default CourseList;

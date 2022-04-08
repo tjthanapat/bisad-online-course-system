@@ -9,13 +9,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Loading from '../../components/Loading';
+
+import LoadingPage from '../../components/LoadingPage';
 
 const Login = () => {
   const auth = useAuth();
 
   useEffect(() => {
-    document.title = 'Courseiku | Login';
+    document.title = 'Courseiku | ลงชื่อเข้าใช้งาน';
   });
 
   const [error, setError] = useState(null);
@@ -46,7 +47,7 @@ const Login = () => {
   };
 
   if (auth.loading) {
-    return <Loading />;
+    return <LoadingPage />;
   } else if (!!auth.user) {
     return <Navigate to="/" replace />;
   } else {
@@ -58,11 +59,12 @@ const Login = () => {
             className="bg-white px-5 py-8 rounded-xl shadow-xl"
             style={{ minWidth: '300px' }}
           >
+            <h2 className="text-lg">ลงชื่อเข้าสู่ระบบ</h2>
             <form onSubmit={handleSignIn}>
-              <h2 className="text-lg">ลงชื่อเข้าสู่ระบบ</h2>
-              <div className="my-3">
+              <div className="my-5 flex flex-col space-y-2">
                 <TextField
                   id="email"
+                  type="email"
                   value={signInData.email}
                   onChange={handleChangeSignInInput}
                   label="อีเมล"
@@ -70,15 +72,13 @@ const Login = () => {
                   required
                   fullWidth
                 />
-              </div>
-              <div className="my-3">
                 <TextField
                   id="password"
+                  type="password"
                   value={signInData.password}
                   onChange={handleChangeSignInInput}
                   label="รหัสผ่าน"
                   variant="standard"
-                  type={'password'}
                   required
                   fullWidth
                 />
@@ -93,7 +93,7 @@ const Login = () => {
                 เข้าสู่ระบบ
               </Button>
             </form>
-            <Link to="/signup">
+            <Link to="/register">
               <Button
                 variant="contained"
                 color="secondary"

@@ -1,0 +1,13 @@
+import React from 'react';
+
+const Footer = () => {
+  return (
+    <div className="bg-gray-100 mt-20">
+      <div className="flex max-w-screen-lg mx-auto px-5 py-10">
+        <p>Courseiku © 2022</p>
+      </div>
+    </div>
+  );
+};
+
+export default Footer;

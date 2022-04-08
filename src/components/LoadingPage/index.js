@@ -1,7 +1,7 @@
 import React from 'react';
 import './Loading.css';
 
-const Loading = () => {
+const LoadingPage = () => {
   return (
     <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center">
       <div className="lds-ellipsis">
@@ -15,4 +15,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default LoadingPage;

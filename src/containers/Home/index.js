@@ -1,45 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { Navigate } from "react-router-dom";
 
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import LoadingPage from '../../components/LoadingPage';
 import CourseList from '../CourseList';
-import Loading from '../../components/Loading';
 
 const Home = () => {
   const auth = useAuth();
 
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  useEffect(() => {
+    document.title = 'Courseiku';
+  });
 
   if (auth.loading) {
-    return <Loading/>;
+    return <LoadingPage />;
   } else if (!!auth.user) {
     return (
       <>
-        <div className="bg-orange-400">
-          <div className="flex justify-between max-w-screen-lg mx-auto p-5">
-            <h1 className="font-medium text-white text-2xl">Courseiku</h1>
-            <button
-              onClick={handleSignOut}
-              className="rounded p-2 bg-white bg-opacity-10 hover:bg-opacity-25 text-white uppercase"
-            >
-              Sign out
-            </button>
-          </div>
-        </div>
+        <Navbar />
         <div className="max-w-screen-lg mx-auto my-5 px-5">
           <p className="md:text-right">
-            Signed in as {auth.user.firstName} {auth.user.lastName} (
-            {auth.user.email})
+            เข้าใช้งานในชื่อ: {auth.user.firstName} {auth.user.lastName}
           </p>
           <hr className="my-5" />
         </div>
         <CourseList />
+        <Footer/>
       </>
     );
   } else {

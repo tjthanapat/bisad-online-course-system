@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import LoadingPage from '../../components/LoadingPage';
 
 const Register = () => {
   const auth = useAuth();
+
+  useEffect(() => {
+    document.title = 'Courseiku | สมัครสมาชิก';
+  });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -38,98 +52,139 @@ const Register = () => {
     } catch (err) {
       console.error(err);
       setError(err);
+      setOpenDialog(true);
       setLoading(false);
     }
   };
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   if (auth.loading || loading) {
-    return <p>Loading....</p>;
+    return <LoadingPage />;
   } else if (success) {
     return (
-      <div>
-        <p>Signed up successfully.</p>
-        <Link to="/">Home</Link>
+      <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center p-5">
+        <h1 className="text-4xl font-semibold text-white mb-8">Courseiku</h1>
+        <div
+          className="bg-white px-5 py-8 rounded-xl shadow-xl"
+          style={{ minWidth: '300px' }}
+        >
+          <h2 className="text-lg font-medium mb-5">สมัครสมาชิกสำเร็จ</h2>
+          <Link to="/">
+            <Button
+              variant="contained"
+              color="secondary"
+              disableElevation
+              fullWidth
+              type="submit"
+            >
+              หน้าแรก
+            </Button>
+          </Link>
+        </div>
+        <p className="text-white mt-16">Courseiku © 2022</p>
       </div>
     );
   } else if (!!auth.user) {
-    return (
-      <div>
-        <p>You're signed in.</p>
-        <Link to="/">
-          <button>Home</button>
-        </Link>
-      </div>
-    );
+    return <Navigate to="/" replace />;
   } else {
     return (
-      <div className="bg-orange-400 min-h-screen flex items-center justify-center">
-        <div>
-          <h1 className="text-5xl font-bold text-white mb-5">Register!</h1>
-          <form onSubmit={handleSignUp}>
-            <div>
-              <input
-                type="email"
-                className="rounded p-2"
-                id="email"
-                placeholder="email"
-                value={signUpData.email}
-                onChange={handleChangeSignUpInput}
-                required
-              />
-            </div>
-            <div className="mt-3">
-              <input
-                type="text"
-                className="rounded p-2"
-                id="firstName"
-                placeholder="firstName"
-                value={signUpData.firstName}
-                onChange={handleChangeSignUpInput}
-                required
-              />
-            </div>
-            <div className="mt-3">
-              <input
-                type="text"
-                className="rounded p-2"
-                id="lastName"
-                placeholder="lastName"
-                value={signUpData.lastName}
-                onChange={handleChangeSignUpInput}
-                required
-              />
-            </div>
-            <div className="mt-3">
-              <input
-                type="password"
-                className="rounded p-2"
-                id="password"
-                placeholder="password"
-                value={signUpData.password}
-                onChange={handleChangeSignUpInput}
-                required
-              />
-            </div>
-            <div className="mt-3">
-              <input
-                type="password"
-                className="rounded p-2"
-                id="passwordConfirmed"
-                placeholder="confirm password"
-                value={signUpData.passwordConfirmed}
-                onChange={handleChangeSignUpInput}
-                required
-              />
-            </div>
-            {!!error && <p>{error.message}</p>}
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full w-full mt-5"
-            >
-              Register
-            </button>
-          </form>
+      <>
+        <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center p-5">
+          <h1 className="text-4xl font-semibold text-white mb-8">Courseiku</h1>
+          <div
+            className="bg-white px-5 py-8 rounded-xl shadow-xl"
+            style={{ minWidth: '300px' }}
+          >
+            <h2 className="text-lg">สมัครสมาชิก</h2>
+            <form onSubmit={handleSignUp}>
+              <div className="my-5 flex flex-col space-y-2">
+                <TextField
+                  id="email"
+                  type="email"
+                  value={signUpData.email}
+                  onChange={handleChangeSignUpInput}
+                  label="อีเมล"
+                  variant="standard"
+                  required
+                  fullWidth
+                />
+                <TextField
+                  id="firstName"
+                  type="text"
+                  value={signUpData.firstName}
+                  onChange={handleChangeSignUpInput}
+                  label="ชื่อ"
+                  variant="standard"
+                  required
+                  fullWidth
+                />
+                <TextField
+                  id="lastName"
+                  type="text"
+                  value={signUpData.lastName}
+                  onChange={handleChangeSignUpInput}
+                  label="นามสกุล"
+                  variant="standard"
+                  required
+                  fullWidth
+                />
+                <TextField
+                  id="password"
+                  type="password"
+                  value={signUpData.password}
+                  onChange={handleChangeSignUpInput}
+                  label="รหัสผ่าน"
+                  variant="standard"
+                  required
+                  fullWidth
+                />
+                <TextField
+                  id="passwordConfirmed"
+                  type="password"
+                  value={signUpData.passwordConfirmed}
+                  onChange={handleChangeSignUpInput}
+                  label="ยืนยันรหัสผ่าน"
+                  variant="standard"
+                  required
+                  fullWidth
+                />
+              </div>
+              <Button
+                variant="contained"
+                color="secondary"
+                disableElevation
+                fullWidth
+                type="submit"
+              >
+                เข้าสู่ระบบ
+              </Button>
+            </form>
+          </div>
+          <p className="text-white mt-16">Courseiku © 2022</p>
         </div>
-      </div>
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">เกิดข้อผิดพลาด</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {!!error && error.message}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} autoFocus>
+              ปิด
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
     );
   }
 };
