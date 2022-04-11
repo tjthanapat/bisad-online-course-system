@@ -10,7 +10,6 @@ import Register from './containers/Register';
 import CreateCourse from './containers/MangeCourse/CreateCourse';
 import Course from './containers/Course';
 import Enroll from './containers/Enroll';
-import LoadingPage from './components/LoadingPage';
 
 import { ThemeProvider } from '@mui/material/styles';
 import { courseikuTheme } from './muiTheme';
@@ -24,7 +23,6 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
-            <Route path="loading" element={<LoadingPage />} />
             {/* <Route path="addadmin" element={<AddAdmin />} /> */}
             <Route path="createcourse" element={<CreateCourse />} />
             <Route path="enroll" element={<Enroll />} />

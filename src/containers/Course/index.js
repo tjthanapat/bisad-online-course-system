@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, Route, Routes, useParams } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useParams,
+} from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { getCourse, getLessons } from '../../functions/course';
 import { isEnrollmentExist } from '../../functions/enroll';
+
+import Button from '@mui/material/Button';
+
+import LoadingPage from '../../components/LoadingPage';
 import Enroll from '../Enroll';
 import Lesson from '../Lesson';
 import CreateLesson from '../MangeCourse/CreateLesson';
@@ -45,11 +56,34 @@ const Course = () => {
   }, [auth.user, courseId]);
 
   if (auth.loading || loading) {
-    return <p>Loading...</p>;
+    return <LoadingPage />;
   } else if (!auth.user) {
-    return <p>Please sign in to access this page.</p>;
+    return <Navigate to="/login" replace />;
   } else if (!!error) {
-    return <p>{error.message}</p>;
+    return (
+      <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center p-5">
+        <h1 className="text-4xl font-semibold text-white mb-8">Courseiku</h1>
+        <div
+          className="bg-white px-5 py-8 rounded-xl shadow-xl"
+          style={{ minWidth: '300px' }}
+        >
+          <h2 className="text-lg font-medium">มีบางอย่างผิดพลาด</h2>
+          <p className="mb-5">{error.message}</p>
+          <Link to="/">
+            <Button
+              variant="contained"
+              color="secondary"
+              disableElevation
+              fullWidth
+              type="submit"
+            >
+              หน้าแรก
+            </Button>
+          </Link>
+        </div>
+        <p className="text-white mt-16">Courseiku © 2022</p>
+      </div>
+    );
   } else {
     return (
       <Routes>
@@ -65,7 +99,13 @@ const Course = () => {
         />
         <Route
           path="enroll"
-          element={<Enroll course={course} enrolled={enrolled} setEnrolled={setEnrolled}/>}
+          element={
+            <Enroll
+              course={course}
+              enrolled={enrolled}
+              setEnrolled={setEnrolled}
+            />
+          }
         />
         <Route path="createlesson" element={<CreateLesson course={course} />} />
         <Route path="lesson" element={<Outlet />}>
@@ -75,7 +115,9 @@ const Course = () => {
           />
           <Route
             path=":lessonId/*"
-            element={<Lesson course={course} lessons={lessons} enrolled={enrolled}/>}
+            element={
+              <Lesson course={course} lessons={lessons} enrolled={enrolled} />
+            }
           />
         </Route>
       </Routes>

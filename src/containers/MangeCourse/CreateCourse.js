@@ -15,7 +15,7 @@ const CreateCourse = () => {
     description: '',
     instructor: '',
     coverImageUrl: '',
-    price: 0,
+    price: '',
   };
   const [courseData, setCourseData] = useState(courseDataDefault);
 
@@ -32,7 +32,7 @@ const CreateCourse = () => {
         description: courseData.description,
         instructor: courseData.instructor,
         coverImageUrl: courseData.coverImageUrl,
-        price: courseData.price,
+        price: parseFloat(courseData.price),
       };
       await createCourse(courseData.id, courseDataExcludeId);
       setSuccess(true);

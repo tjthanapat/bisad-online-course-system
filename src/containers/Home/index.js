@@ -24,7 +24,6 @@ const Home = () => {
           <p className="md:text-right">
             เข้าใช้งานในชื่อ: {auth.user.firstName} {auth.user.lastName}
           </p>
-          <hr className="my-5" />
         </div>
         <CourseList />
         <Footer/>

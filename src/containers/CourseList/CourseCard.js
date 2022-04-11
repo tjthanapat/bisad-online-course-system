@@ -9,16 +9,16 @@ const CourseCard = (props) => {
   const { course } = props;
   return (
     <div className="flex flex-col md:flex-row border rounded-lg shadow-lg my-5">
-      <div className="h-48 md:w-72">
+      <div className="h-48 md:w-1/4">
         <img
           src={course.coverImageUrl}
           className="h-full w-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
           alt={course.name}
         />
       </div>
-      <div className="p-5">
+      <div className="p-5 w-3/4">
         <h3 className="font-medium text-xl">{course.name}</h3>
-        <p className="truncate">{course.description}</p>
+        <p className="truncate w-full">{course.description}</p>
         <div className="mt-5">
           <Link to={`/course/${course.id}`}>
             <Button

@@ -2,95 +2,109 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
+import Button from '@mui/material/Button';
+
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import LessonItem from './LessonItem';
+
 const CoursePage = (props) => {
   const auth = useAuth();
   const { lessons, course, enrolled } = props;
 
   return (
     <>
-      <div className="flex">
-        <div>
-          <img
-            src={course.coverImageUrl}
-            className="h-48 w-48 object-cover"
-            alt=""
-          />
-        </div>
-        <div>
-          <p>
-            {course.name} (id: {course.id})
-          </p>
-          <p>Instructor: {course.instructor}</p>
-          <p>Description: {course.description}</p>
-          <p>Price: {course.price} baht</p>
-          {!!auth.user.admin && (
-            <Link to={`/course/${course.id}/edit`}>
-              <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
-                Edit
-              </button>
-            </Link>
-          )}
-          {!auth.user.admin && !enrolled && (
-            <Link to={`/course/${course.id}/enroll`}>
-              <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
-                Enroll
-              </button>
-            </Link>
-          )}
-        </div>
-      </div>
-      <div>
-        <h2 className="text-2xl font-medium">Lessons</h2>
-        {!!auth.user.admin && (
-          <Link to={`/course/${course.id}/createlesson`}>
-            <button className="rounded-full py-1 px-5 bg-blue-500 hover:bg-blue-600 text-white">
-              Create New Lesson
-            </button>
+      <Navbar />
+      <div className="max-w-screen-lg mx-auto my-5 px-5">
+        <div className="mt-10">
+          <Link to="/">
+            <span className='text-gray-400 hover:text-orange-400'>{'<'} กลับหน้าแรก</span>
           </Link>
-        )}
-
-        {!!lessons &&
-          lessons.map((lesson) => (
-            <LessonItem
-              key={lesson.id}
-              courseId={course.id}
-              lesson={lesson}
-              enrolled={enrolled}
+        </div>
+        <div className="mt-7 flex flex-col md:flex-row">
+          <div className="h-56 md:w-72">
+            <img
+              src={course.coverImageUrl}
+              className="h-full w-full object-cover rounded-lg"
+              alt={course.name}
             />
-          ))}
+          </div>
+          <div className="mt-5 md:mt-0 md:ml-5 md:w-3/4">
+            <h1 className="font-medium text-3xl text-orange-400">{course.name}</h1>
+            <p>ผู้สอน: {course.instructor}</p>
+            {!enrolled && (
+              <p>
+                ราคา:{' '}
+                {Number(course.price).toLocaleString('en', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}{' '}
+                บาท
+              </p>
+            )}
+            <p className="mt-2">{course.description}</p>
+
+            {!!auth.user.admin && (
+              <Link to={`/course/${course.id}/edit`}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disableElevation
+                  sx={{ marginTop: '1rem', fontSize: '1rem' }}
+                >
+                  แก้ไขคอร์ส
+                </Button>
+              </Link>
+            )}
+            {!auth.user.admin && !enrolled && (
+              <Link to={`/course/${course.id}/enroll`}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disableElevation
+                  sx={{ marginTop: '1rem', fontSize: '1rem' }}
+                >
+                  ลงทะเบียนเรียน
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
+        <div className="mt-5">
+          <div className="flex flex-row justify-between items-center mb-3">
+            <h2 className="text-2xl font-medium text-orange-400">บทเรียน</h2>
+            {!!auth.user.admin && (
+              <div className="flex justify-end">
+                <Link to={`/course/${course.id}/createlesson`}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disableElevation
+                    sx={{ fontSize: '1rem' }}
+                  >
+                    สร้างบทเรียนใหม่
+                  </Button>
+                </Link>
+              </div>
+            )}
+          </div>
+          <div className="rounded-lg border mt-2">
+            <ul className="divide-y">
+              {!!lessons &&
+                lessons.map((lesson) => (
+                  <LessonItem
+                    key={lesson.id}
+                    courseId={course.id}
+                    lesson={lesson}
+                    enrolled={enrolled}
+                  />
+                ))}
+            </ul>
+          </div>
+        </div>
       </div>
+      <Footer />
     </>
-  );
-};
-
-const LessonItem = (props) => {
-  const auth = useAuth();
-  const { courseId, lesson, enrolled } = props;
-  return (
-    <div>
-      <p>
-        {lesson.name} (id: {lesson.id})
-      </p>
-      {auth.user.admin || enrolled ? (
-        <Link to={`/course/${courseId}/lesson/${lesson.id}`}>
-          <button className="rounded-full py-1 px-5 bg-orange-500 hover:bg-orange-600 text-white">
-            View
-          </button>
-        </Link>
-      ) : (
-        <button className="rounded-full py-1 px-5 bg-gray-300 cursor-not-allowed">
-          View
-        </button>
-      )}
-
-      {auth.user.admin && (
-        <Link to={`/course/${courseId}/lesson/${lesson.id}/edit`}>
-          <button className="rounded-full py-1 px-5 bg-blue-500 hover:bg-blue-600 text-white">
-            Edit
-          </button>
-        </Link>
-      )}
-    </div>
   );
 };
 
