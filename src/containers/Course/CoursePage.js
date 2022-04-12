@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -11,6 +11,10 @@ import LessonItem from './LessonItem';
 const CoursePage = (props) => {
   const auth = useAuth();
   const { lessons, course, enrolled } = props;
+
+  useEffect(() => {
+    document.title = `Courseiku | ${course.name}`;
+  });
 
   return (
     <>

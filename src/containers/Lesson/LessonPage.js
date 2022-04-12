@@ -10,6 +10,10 @@ const LessonPage = (props) => {
   const auth = useAuth();
   const { lesson, course, enrolled } = props;
 
+  useEffect(() => {
+    document.title = `Courseiku | ${lesson.name}`;
+  });
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

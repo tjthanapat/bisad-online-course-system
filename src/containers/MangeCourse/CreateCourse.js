@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { createCourse } from '../../functions/courseManagement';
@@ -16,6 +16,10 @@ import Footer from '../../components/Footer';
 
 const CreateCourse = () => {
   const auth = useAuth();
+
+  useEffect(() => {
+    document.title = 'Courseiku | สร้างคอร์สเรียน';
+  });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
