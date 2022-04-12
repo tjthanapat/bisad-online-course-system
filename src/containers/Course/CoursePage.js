@@ -18,7 +18,7 @@ const CoursePage = (props) => {
       <div className="max-w-screen-lg mx-auto my-5 px-5">
         <div className="mt-10">
           <Link to="/">
-            <span className='text-gray-400 hover:text-orange-400'>{'<'} กลับหน้าแรก</span>
+            <span className='text-gray-400 hover:text-orange-400'>{'<'} กลับหน้ารายการคอร์สเรียน</span>
           </Link>
         </div>
         <div className="mt-7 flex flex-col md:flex-row">

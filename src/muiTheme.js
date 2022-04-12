@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import { blue } from '@mui/material/colors';
 
 export const courseikuTheme = createTheme({
   palette: {
@@ -9,9 +10,9 @@ export const courseikuTheme = createTheme({
       contrastText: '#fff',
     },
     secondary: {
-      light: '#9ed3ff',
-      main: '#68a2f4',
-      dark: '#2b74c1',
+      light: blue[300],
+      main: blue[500],
+      dark: blue[700],
       contrastText: '#fff',
     },
   },

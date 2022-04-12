@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { createLesson } from '../../functions/courseManagement';
+
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import LoadingPage from '../../components/LoadingPage';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 const CreateLesson = (props) => {
   const auth = useAuth();
 
   const { course } = props;
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
   const lessonDataDefault = {
@@ -41,109 +54,170 @@ const CreateLesson = (props) => {
       setLoading(false);
     } catch (err) {
       console.error(err);
+      setError(err);
+      setOpenDialog(true);
       setLoading(false);
-      alert(err.message);
     }
   };
-  
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   if (auth.loading || loading) {
-    return <p>Loading...</p>;
+    return <LoadingPage />;
   } else if (success) {
     return (
-      <div>
-        <p>Created new lesson successfully.</p>
-        <a href={`/course/${course.id}`}>Back to course page</a>
+      <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center p-5">
+        <h1 className="text-4xl font-semibold text-white mb-8">Courseiku</h1>
+        <div
+          className="bg-white px-5 py-8 rounded-xl shadow-xl"
+          style={{ minWidth: '300px' }}
+        >
+          <h2 className="text-lg font-medium">สร้างบทเรียนสำเร็จ</h2>
+          <p className="mb-5">
+            คุณได้ทำการสร้างบทเรียนใหม่ในคอร์ส {course.name} (ไอดี: {course.id})
+          </p>
+          <a href={`/course/${course.id}`}>
+            <Button
+              variant="contained"
+              color="secondary"
+              disableElevation
+              fullWidth
+            >
+              กลับหน้าคอร์สเรียน
+            </Button>
+          </a>
+        </div>
+        <p className="text-white mt-16">Courseiku © 2022</p>
       </div>
     );
   } else if (!!auth.user && auth.user.admin) {
     return (
-      <div className="bg-orange-400 min-h-screen px-5 py-10">
-        <div className="max-w-screen-lg bg-white p-5 mx-auto rounded-lg">
-          <h1 className="text-2xl font-medium">
-            Create New Lesson in {course.name} (id: {course.id})
-          </h1>
+      <>
+        <Navbar />
+        <div className="max-w-screen-lg mx-auto my-5 px-5">
+          <div className="mt-10">
+            <Link to={`/course/${course.id}`}>
+              <span className="text-gray-400 hover:text-orange-400">
+                {'<'} กลับ
+              </span>
+            </Link>
+          </div>
+          <h1 className="mt-7 text-2xl font-medium">สร้างบทเรียนใหม่</h1>
+          <p>
+            สร้างบทเรียนในคอร์ส {course.name} (ไอดี: {course.id})
+          </p>
           <form onSubmit={handleSubmitCreateLesson}>
-            <div>
-              <label htmlFor="id">Lesson ID</label>
-              <input
-                type="text"
-                className="block p-2 rounded border w-full"
-                id="id"
-                placeholder="Lesson ID"
-                value={lessonData.id}
-                onChange={handleChangeLessonDataInput}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="name">Lesson Name</label>
-              <input
-                type="text"
-                className="block p-2 rounded border w-full"
-                id="name"
-                placeholder="Lesson Name"
-                value={lessonData.name}
-                onChange={handleChangeLessonDataInput}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description">Description</label>
-              <textarea
-                className="block p-2 rounded border w-full"
-                id="description"
-                placeholder="Description"
-                rows={4}
-                value={lessonData.description}
-                onChange={handleChangeLessonDataInput}
-              />
-            </div>
-            <div>
-              <p>Lesson Type</p>
+            <div className="my-5 space-y-3">
               <div>
+                <label htmlFor="id">ไอดีบทเรียน</label>
                 <input
-                  type="radio"
-                  id="video"
-                  value="video"
-                  name="lessonType"
-                  checked={lessonData.type === 'video'}
-                  onChange={handleChangeLessonType}
+                  type="text"
+                  className="block p-2 rounded border w-full"
+                  id="id"
+                  placeholder="ไอดีบทเรียน"
+                  value={lessonData.id}
+                  onChange={handleChangeLessonDataInput}
+                  required
                 />
-                <label htmlFor="video">Video</label>
               </div>
               <div>
+                <label htmlFor="name">ชื่อบทเรียน</label>
                 <input
-                  type="radio"
-                  id="file"
-                  value="file"
-                  name="lessonType"
-                  checked={lessonData.type === 'file'}
-                  onChange={handleChangeLessonType}
+                  type="text"
+                  className="block p-2 rounded border w-full"
+                  id="name"
+                  placeholder="ชื่อบทเรียน"
+                  value={lessonData.name}
+                  onChange={handleChangeLessonDataInput}
+                  required
                 />
-                <label htmlFor="file">File</label>
+              </div>
+              <div>
+                <label htmlFor="description">คำอธิบายบทเรียน</label>
+                <textarea
+                  className="block p-2 rounded border w-full"
+                  id="description"
+                  placeholder="คำอธิบายบทเรียน"
+                  rows={4}
+                  value={lessonData.description}
+                  onChange={handleChangeLessonDataInput}
+                />
+              </div>
+              <div>
+                <p>ประเภทบทเรียน</p>
+                <div>
+                  <input
+                    type="radio"
+                    id="video"
+                    value="video"
+                    name="lessonType"
+                    checked={lessonData.type === 'video'}
+                    onChange={handleChangeLessonType}
+                  />
+                  <label htmlFor="video" className="ml-2">
+                    วิดีโอ
+                  </label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="file"
+                    value="file"
+                    name="lessonType"
+                    checked={lessonData.type === 'file'}
+                    onChange={handleChangeLessonType}
+                  />
+                  <label htmlFor="file" className="ml-2">
+                    ไฟล์
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label htmlFor="source">ลิงค์วิดีโอหรือไฟล์บทเรียน</label>
+                <input
+                  type="text"
+                  className="block p-2 rounded border w-full"
+                  id="source"
+                  placeholder="ลิงค์วิดีโอหรือไฟล์บทเรียน"
+                  value={lessonData.source}
+                  onChange={handleChangeLessonDataInput}
+                  required
+                />
               </div>
             </div>
-            <div>
-              <label htmlFor="source">Lesson Source</label>
-              <input
-                type="text"
-                className="block p-2 rounded border w-full"
-                id="source"
-                placeholder="Lesson Source"
-                value={lessonData.source}
-                onChange={handleChangeLessonDataInput}
-                required
-              />
-            </div>
-            <button
+            <Button
+              variant="contained"
+              color="primary"
               type="submit"
-              className="mt-10 rounded p-2 bg-orange-500 text-white uppercase"
+              disableElevation
             >
-              Create
-            </button>
+              สร้าง
+            </Button>
           </form>
         </div>
-      </div>
+        <Footer />
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">เกิดข้อผิดพลาด</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {!!error && error.message}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} autoFocus>
+              ปิด
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
     );
   } else {
     return <p>Only admin can access this page.</p>;

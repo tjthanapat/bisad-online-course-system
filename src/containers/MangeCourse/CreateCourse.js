@@ -3,10 +3,22 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { createCourse } from '../../functions/courseManagement';
 
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import LoadingPage from '../../components/LoadingPage';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+
 const CreateCourse = () => {
   const auth = useAuth();
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
   const courseDataDefault = {
@@ -39,108 +51,165 @@ const CreateCourse = () => {
       setLoading(false);
     } catch (err) {
       console.error(err);
+      setError(err);
+      setOpenDialog(true);
       setLoading(false);
-      alert(err.message);
     }
   };
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   if (auth.loading || loading) {
-    return <p>Loading...</p>;
+    return <LoadingPage />;
   } else if (success) {
     return (
-      <div>
-        <p>Created new course successfully.</p>
-        <Link to="/">Back to home</Link>
+      <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center p-5">
+        <h1 className="text-4xl font-semibold text-white mb-8">Courseiku</h1>
+        <div
+          className="bg-white px-5 py-8 rounded-xl shadow-xl"
+          style={{ minWidth: '300px' }}
+        >
+          <h2 className="text-lg font-medium">สร้างคอร์สสำเร็จ</h2>
+          <p className="mb-5">
+            คุณได้ทำการสร้างคอร์ส {courseData.name} (ไอดี: {courseData.id})
+          </p>
+          <Link to="/">
+            <Button
+              variant="contained"
+              color="secondary"
+              disableElevation
+              fullWidth
+            >
+              กลับหน้ารายการคอร์สเรียน
+            </Button>
+          </Link>
+        </div>
+        <p className="text-white mt-16">Courseiku © 2022</p>
       </div>
     );
   }
   if (!!auth.user && auth.user.admin) {
     return (
-      <div className="bg-orange-400 min-h-screen px-5 py-10">
-        <div className="max-w-screen-lg bg-white p-5 mx-auto rounded-lg">
-          <h1 className="text-2xl font-medium">Create New Course</h1>
+      <>
+        <Navbar />
+        <div className="max-w-screen-lg mx-auto my-5 px-5">
+          <div className="mt-10">
+            <Link to="/">
+              <span className="text-gray-400 hover:text-orange-400">
+                {'<'} กลับ
+              </span>
+            </Link>
+          </div>
+          <h1 className="mt-7 text-2xl font-medium">สร้างคอร์สเรียน</h1>
           <form onSubmit={handleSubmitCreateCourse}>
-            <div>
-              <label htmlFor="id">Course ID</label>
-              <input
-                type="text"
-                className="block p-2 rounded border w-full"
-                id="id"
-                placeholder="Course ID"
-                value={courseData.id}
-                onChange={handleChangeCourseDataInput}
-                required
-              />
+            <div className="my-5 space-y-3">
+              <div>
+                <label htmlFor="id">ไอดีคอร์ส</label>
+                <input
+                  type="text"
+                  className="block p-2 rounded border w-full"
+                  id="id"
+                  placeholder="ไอดีคอร์ส"
+                  value={courseData.id}
+                  onChange={handleChangeCourseDataInput}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="name">ชื่อคอร์ส</label>
+                <input
+                  type="text"
+                  className="block p-2 rounded border w-full"
+                  id="name"
+                  placeholder="ชื่อคอร์ส"
+                  value={courseData.name}
+                  onChange={handleChangeCourseDataInput}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="instructor">ผู้สอน</label>
+                <input
+                  type="text"
+                  className="block p-2 rounded border w-full"
+                  id="instructor"
+                  placeholder="ชื่อผู้สอน"
+                  value={courseData.instructor}
+                  onChange={handleChangeCourseDataInput}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="description">คำอธิบายคอร์ส</label>
+                <textarea
+                  className="block p-2 rounded border w-full"
+                  id="description"
+                  placeholder="คำอธิบายคอร์ส"
+                  rows={4}
+                  value={courseData.description}
+                  onChange={handleChangeCourseDataInput}
+                />
+              </div>
+              <div>
+                <label htmlFor="price">ราคาคอร์ส (บาท)</label>
+                <input
+                  type="number"
+                  min={0}
+                  step={0.01}
+                  className="block p-2 rounded border w-full"
+                  id="price"
+                  placeholder="ราคาคอร์ส (บาท)"
+                  value={courseData.price}
+                  onChange={handleChangeCourseDataInput}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="coverImageUrl">รูปปกคอร์ส</label>
+                <input
+                  type="text"
+                  className="block p-2 rounded border w-full"
+                  id="coverImageUrl"
+                  placeholder="Cover Image URL"
+                  value={courseData.coverImageUrl}
+                  onChange={handleChangeCourseDataInput}
+                  required
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="name">Course Name</label>
-              <input
-                type="text"
-                className="block p-2 rounded border w-full"
-                id="name"
-                placeholder="Course Name"
-                value={courseData.name}
-                onChange={handleChangeCourseDataInput}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="instructor">Instructor</label>
-              <input
-                type="text"
-                className="block p-2 rounded border w-full"
-                id="instructor"
-                placeholder="Instructor Full Name"
-                value={courseData.instructor}
-                onChange={handleChangeCourseDataInput}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="description">Description</label>
-              <textarea
-                className="block p-2 rounded border w-full"
-                id="description"
-                rows={4}
-                value={courseData.description}
-                onChange={handleChangeCourseDataInput}
-              />
-            </div>
-            <div>
-              <label htmlFor="price">Price</label>
-              <input
-                type="number"
-                min={0}
-                step={0.01}
-                className="block p-2 rounded border w-full"
-                id="price"
-                placeholder="Price"
-                value={courseData.price}
-                onChange={handleChangeCourseDataInput}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="coverImageUrl">Cover Image URL</label>
-              <input
-                type="text"
-                className="block p-2 rounded border w-full"
-                id="coverImageUrl"
-                placeholder="Cover Image URL"
-                value={courseData.coverImageUrl}
-                onChange={handleChangeCourseDataInput}
-                required
-              />
-            </div>
-            <button
+            <Button
+              variant="contained"
+              color="primary"
               type="submit"
-              className="mt-10 rounded p-2 bg-orange-500 text-white uppercase"
+              disableElevation
             >
-              Create
-            </button>
+              สร้าง
+            </Button>
           </form>
         </div>
-      </div>
+        <Footer />
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">เกิดข้อผิดพลาด</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {!!error && error.message}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} autoFocus>
+              ปิด
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
     );
   } else {
     return <p>Only admin can access this page.</p>;

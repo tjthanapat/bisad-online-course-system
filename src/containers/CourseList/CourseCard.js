@@ -8,11 +8,11 @@ const CourseCard = (props) => {
   const auth = useAuth();
   const { course } = props;
   return (
-    <div className="flex flex-col md:flex-row border rounded-lg shadow-lg my-5">
+    <div className="flex flex-col md:flex-row border rounded-2xl my-5">
       <div className="h-48 md:w-1/4">
         <img
           src={course.coverImageUrl}
-          className="h-full w-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none"
+          className="h-full w-full object-cover rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none"
           alt={course.name}
         />
       </div>

@@ -160,7 +160,7 @@ const Register = () => {
                 fullWidth
                 type="submit"
               >
-                เข้าสู่ระบบ
+                สมัครสมาชิก
               </Button>
             </form>
           </div>

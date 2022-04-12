@@ -101,11 +101,12 @@ const Enroll = (props) => {
     } catch (err) {
       console.error(err);
       setError(err);
+      setOpenDialog(true);
       setLoading(false);
     }
   };
 
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
