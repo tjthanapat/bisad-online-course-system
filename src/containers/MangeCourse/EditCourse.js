@@ -30,16 +30,40 @@ const EditCourse = (props) => {
     setCourseData({ ...courseData, [event.target.id]: event.target.value });
   };
 
-  const handleSubmitCreateCourse = async (event) => {
+  const [coverImageChanged, setCoverImageChanged] = useState(false)
+  const handleChangeCoverImage = (event) => {
+    setCoverImageChanged(true)
+    const file = event.target.files[0];
+    setCourseData({ ...courseData, coverImage: file });
+  };
+
+  const convertFileToDataUrl = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleSubmitEditCourse = async (event) => {
     event.preventDefault();
     try {
       setLoading(true);
+      let coverImageDataURL = null;
+      if (coverImageChanged && !!courseData.coverImage) {
+        coverImageDataURL = await convertFileToDataUrl(courseData.coverImage);
+      } else {
+        coverImageDataURL = courseData.coverImage
+      }
+      
       const courseDataExcludeId = {
         name: courseData.name,
         description: courseData.description,
         instructor: courseData.instructor,
-        coverImageUrl: courseData.coverImageUrl,
-        price: courseData.price,
+        coverImage: coverImageDataURL,
+        price: parseFloat(courseData.price),
       };
       await updateCourse(courseData.id, courseDataExcludeId);
       props.setCourse(courseData);
@@ -72,7 +96,7 @@ const EditCourse = (props) => {
           <p className="mb-5">
             คุณได้ทำการแก้ไขคอร์ส {courseData.name} (ไอดี: {courseData.id})
           </p>
-          <Link to={`/course/${courseData.id}`}>
+          <a href={`/course/${courseData.id}`}>
             <Button
               variant="contained"
               color="secondary"
@@ -81,7 +105,7 @@ const EditCourse = (props) => {
             >
               กลับหน้าคอร์สเรียน
             </Button>
-          </Link>
+          </a>
         </div>
         <p className="text-white mt-16">Courseiku © 2022</p>
       </div>
@@ -99,7 +123,7 @@ const EditCourse = (props) => {
             </Link>
           </div>
           <h1 className="mt-7 text-2xl font-medium">แก้ไขคอร์สเรียน</h1>
-          <form onSubmit={handleSubmitCreateCourse}>
+          <form onSubmit={handleSubmitEditCourse}>
             <div className="my-5 space-y-3">
               <div>
                 <label htmlFor="id">ไอดีคอร์ส</label>
@@ -163,15 +187,28 @@ const EditCourse = (props) => {
               </div>
               <div>
                 <label htmlFor="coverImageUrl">รูปปกคอร์ส</label>
-                <input
-                  type="text"
-                  className="block p-2 rounded border w-full"
-                  id="coverImageUrl"
-                  placeholder="Cover Image URL"
-                  value={courseData.coverImageUrl}
-                  onChange={handleChangeCourseDataInput}
-                  required
-                />
+                <div>
+                  <input
+                    accept="image/jpeg,image/png"
+                    id="coverImageFile"
+                    multiple={false}
+                    type="file"
+                    onChange={handleChangeCoverImage}
+                    hidden
+                  />
+                  <label htmlFor="coverImageFile">
+                    <Button variant="text" component="span">
+                      เลือกไฟล์
+                    </Button>
+                  </label>
+                  <label className="ml-3">
+                    {courseData.coverImage
+                      ? !!courseData.coverImage.name
+                        ? courseData.coverImage.name
+                        : 'uploaded'
+                      : 'ยังไม่มีไฟล์ที่ถูกเลือก'}
+                  </label>
+                </div>
               </div>
             </div>
             <Button

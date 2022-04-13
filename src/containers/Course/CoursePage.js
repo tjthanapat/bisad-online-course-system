@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -22,27 +22,37 @@ const CoursePage = (props) => {
       <div className="max-w-screen-lg mx-auto my-5 px-5">
         <div className="mt-10">
           <Link to="/">
-            <span className='text-gray-400 hover:text-orange-400'>{'<'} กลับหน้ารายการคอร์สเรียน</span>
+            <span className="text-gray-400 hover:text-orange-400">
+              {'<'} กลับหน้ารายการคอร์สเรียน
+            </span>
           </Link>
         </div>
         <div className="mt-7 flex flex-col md:flex-row">
-          <div className="h-56 md:w-72">
-            <img
-              src={course.coverImageUrl}
-              className="h-full w-full object-cover rounded-lg"
-              alt={course.name}
-            />
-          </div>
-          <div className="mt-5 md:mt-0 md:ml-5 md:w-3/4">
-            <h1 className="font-medium text-3xl text-orange-400">{course.name}</h1>
+          {!!course.coverImage && (
+            <div className="h-56 md:w-1/4">
+              <img
+                src={course.coverImage}
+                className="h-full w-full object-cover rounded-lg"
+                alt={course.name}
+              />
+            </div>
+          )}
+          <div
+            className={`mt-5 md:mt-0 ${
+              !!course.coverImage ? 'md:ml-5 md:w-3/4' : ''
+            }`}
+          >
+            <h1 className="font-medium text-3xl text-orange-400">
+              {course.name}
+            </h1>
             <p>ผู้สอน: {course.instructor}</p>
             {!enrolled && (
               <p>
                 ราคา:{' '}
-                {Number(course.price).toLocaleString('en', {
+                <span className='text-xl'>{Number(course.price).toLocaleString('en', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
-                })}{' '}
+                })}</span>{' '}
                 บาท
               </p>
             )}

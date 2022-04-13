@@ -30,7 +30,7 @@ const CreateCourse = () => {
     name: '',
     description: '',
     instructor: '',
-    coverImageUrl: '',
+    coverImage: null,
     price: '',
   };
   const [courseData, setCourseData] = useState(courseDataDefault);
@@ -39,15 +39,34 @@ const CreateCourse = () => {
     setCourseData({ ...courseData, [event.target.id]: event.target.value });
   };
 
+  const handleChangeCoverImage = (event) => {
+    const file = event.target.files[0];
+    setCourseData({ ...courseData, coverImage: file });
+  };
+
+  const convertFileToDataUrl = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmitCreateCourse = async (event) => {
     event.preventDefault();
     try {
       setLoading(true);
+      let coverImageDataURL = null;
+      if (!!courseData.coverImage) {
+        coverImageDataURL = await convertFileToDataUrl(courseData.coverImage);
+      }
       const courseDataExcludeId = {
         name: courseData.name,
         description: courseData.description,
         instructor: courseData.instructor,
-        coverImageUrl: courseData.coverImageUrl,
+        coverImage: coverImageDataURL,
         price: parseFloat(courseData.price),
       };
       await createCourse(courseData.id, courseDataExcludeId);
@@ -173,15 +192,24 @@ const CreateCourse = () => {
               </div>
               <div>
                 <label htmlFor="coverImageUrl">รูปปกคอร์ส</label>
-                <input
-                  type="text"
-                  className="block p-2 rounded border w-full"
-                  id="coverImageUrl"
-                  placeholder="Cover Image URL"
-                  value={courseData.coverImageUrl}
-                  onChange={handleChangeCourseDataInput}
-                  required
-                />
+                <div>
+                  <input
+                    accept="image/jpeg,image/png"
+                    id="coverImageFile"
+                    multiple={false}
+                    type="file"
+                    onChange={handleChangeCoverImage}
+                    hidden
+                  />
+                  <label htmlFor="coverImageFile">
+                    <Button variant="text" component="span">
+                      เลือกไฟล์
+                    </Button>
+                  </label>
+                  <label className="ml-3">
+                    {courseData.coverImage ? courseData.coverImage.name : 'ยังไม่มีไฟล์ที่ถูกเลือก'}
+                  </label>
+                </div>
               </div>
             </div>
             <Button
