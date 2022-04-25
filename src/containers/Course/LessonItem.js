@@ -12,7 +12,7 @@ const LessonItem = (props) => {
   const { courseId, lesson, enrolled } = props;
   return (
     <li className="p-5 flex flex-col sm:flex-row sm:items-center justify-between">
-      <div className="flex items-center">
+      <div className="flex flex-wrap items-center">
         {!!lesson.type && lesson.type === 'video' && (
           <VideoIcon className="w-7 text-gray-300" />
         )}
