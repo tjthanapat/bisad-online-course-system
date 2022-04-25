@@ -38,8 +38,9 @@ const LessonPage = (props) => {
     return <LoadingPage />;
   } else if (auth.user.admin || enrolled) {
     return (
-      <>
+      <div className="flex flex-col h-screen justify-between">
         <Navbar />
+        <div className="mb-auto">
         <div className="max-w-screen-lg mx-auto my-5 px-5">
           <div className="mt-10">
             <Link to={`/course/${course.id}`}>
@@ -85,8 +86,10 @@ const LessonPage = (props) => {
             )}
           </div>
         </div>
+        </div>
+       
         <Footer />
-      </>
+      </div>
     );
   } else {
     return <Navigate to="/" replace />;

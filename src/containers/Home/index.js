@@ -18,16 +18,19 @@ const Home = () => {
     return <LoadingPage />;
   } else if (!!auth.user) {
     return (
-      <>
+      <div className="flex flex-col h-screen justify-between">
         <Navbar />
-        <div className="max-w-screen-lg mx-auto my-5 px-5">
-          <p className="md:text-right">
-            เข้าใช้งานในชื่อ: {auth.user.firstName} {auth.user.lastName}
-          </p>
+        <div className="mb-auto">
+          <div className="max-w-screen-lg mx-auto my-5 px-5">
+            <p className="md:text-right">
+              เข้าใช้งานในชื่อ: {auth.user.firstName} {auth.user.lastName}
+            </p>
+          </div>
+          <CourseList />
         </div>
-        <CourseList />
-        <Footer/>
-      </>
+
+        <Footer />
+      </div>
     );
   } else {
     return <Navigate to="/login" replace />;

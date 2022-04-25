@@ -116,111 +116,113 @@ const CreateCourse = () => {
   }
   if (!!auth.user && auth.user.admin) {
     return (
-      <>
+      <div className="flex flex-col h-screen justify-between">
         <Navbar />
-        <div className="max-w-screen-lg mx-auto my-5 px-5">
-          <div className="mt-10">
-            <Link to="/">
-              <span className="text-gray-400 hover:text-orange-400">
-                {'<'} กลับ
-              </span>
-            </Link>
-          </div>
-          <h1 className="mt-7 text-2xl font-medium">สร้างคอร์สเรียน</h1>
-          <form onSubmit={handleSubmitCreateCourse}>
-            <div className="my-5 space-y-3">
-              <div>
-                <label htmlFor="id">ไอดีคอร์ส</label>
-                <input
-                  type="text"
-                  className="block p-2 rounded border w-full"
-                  id="id"
-                  placeholder="ไอดีคอร์ส"
-                  value={courseData.id}
-                  onChange={handleChangeCourseDataInput}
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="name">ชื่อคอร์ส</label>
-                <input
-                  type="text"
-                  className="block p-2 rounded border w-full"
-                  id="name"
-                  placeholder="ชื่อคอร์ส"
-                  value={courseData.name}
-                  onChange={handleChangeCourseDataInput}
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="instructor">ผู้สอน</label>
-                <input
-                  type="text"
-                  className="block p-2 rounded border w-full"
-                  id="instructor"
-                  placeholder="ชื่อผู้สอน"
-                  value={courseData.instructor}
-                  onChange={handleChangeCourseDataInput}
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="description">คำอธิบายคอร์ส</label>
-                <textarea
-                  className="block p-2 rounded border w-full"
-                  id="description"
-                  placeholder="คำอธิบายคอร์ส"
-                  rows={4}
-                  value={courseData.description}
-                  onChange={handleChangeCourseDataInput}
-                />
-              </div>
-              <div>
-                <label htmlFor="price">ราคาคอร์ส (บาท)</label>
-                <input
-                  type="number"
-                  min={0}
-                  step={0.01}
-                  className="block p-2 rounded border w-full"
-                  id="price"
-                  placeholder="ราคาคอร์ส (บาท)"
-                  value={courseData.price}
-                  onChange={handleChangeCourseDataInput}
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="coverImageUrl">รูปปกคอร์ส</label>
+        <div className="mb-auto">
+          <div className="max-w-screen-lg mx-auto my-5 px-5">
+            <div className="mt-10">
+              <Link to="/">
+                <span className="text-gray-400 hover:text-orange-400">
+                  {'<'} กลับ
+                </span>
+              </Link>
+            </div>
+            <h1 className="mt-7 text-2xl font-medium">สร้างคอร์สเรียน</h1>
+            <form onSubmit={handleSubmitCreateCourse}>
+              <div className="my-5 space-y-3">
                 <div>
+                  <label htmlFor="id">ไอดีคอร์ส</label>
                   <input
-                    accept="image/jpeg,image/png"
-                    id="coverImageFile"
-                    multiple={false}
-                    type="file"
-                    onChange={handleChangeCoverImage}
-                    hidden
+                    type="text"
+                    className="block p-2 rounded border w-full"
+                    id="id"
+                    placeholder="ไอดีคอร์ส"
+                    value={courseData.id}
+                    onChange={handleChangeCourseDataInput}
+                    required
                   />
-                  <label htmlFor="coverImageFile">
-                    <Button variant="text" component="span">
-                      เลือกไฟล์
-                    </Button>
-                  </label>
-                  <label className="ml-3">
-                    {courseData.coverImage ? courseData.coverImage.name : 'ยังไม่มีไฟล์ที่ถูกเลือก'}
-                  </label>
+                </div>
+                <div>
+                  <label htmlFor="name">ชื่อคอร์ส</label>
+                  <input
+                    type="text"
+                    className="block p-2 rounded border w-full"
+                    id="name"
+                    placeholder="ชื่อคอร์ส"
+                    value={courseData.name}
+                    onChange={handleChangeCourseDataInput}
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="instructor">ผู้สอน</label>
+                  <input
+                    type="text"
+                    className="block p-2 rounded border w-full"
+                    id="instructor"
+                    placeholder="ชื่อผู้สอน"
+                    value={courseData.instructor}
+                    onChange={handleChangeCourseDataInput}
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="description">คำอธิบายคอร์ส</label>
+                  <textarea
+                    className="block p-2 rounded border w-full"
+                    id="description"
+                    placeholder="คำอธิบายคอร์ส"
+                    rows={4}
+                    value={courseData.description}
+                    onChange={handleChangeCourseDataInput}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="price">ราคาคอร์ส (บาท)</label>
+                  <input
+                    type="number"
+                    min={0}
+                    step={0.01}
+                    className="block p-2 rounded border w-full"
+                    id="price"
+                    placeholder="ราคาคอร์ส (บาท)"
+                    value={courseData.price}
+                    onChange={handleChangeCourseDataInput}
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="coverImageUrl">รูปปกคอร์ส</label>
+                  <div>
+                    <input
+                      accept="image/jpeg,image/png"
+                      id="coverImageFile"
+                      multiple={false}
+                      type="file"
+                      onChange={handleChangeCoverImage}
+                      hidden
+                    />
+                    <label htmlFor="coverImageFile">
+                      <Button variant="text" component="span">
+                        เลือกไฟล์
+                      </Button>
+                    </label>
+                    <label className="ml-3">
+                      {courseData.coverImage ? courseData.coverImage.name : 'ยังไม่มีไฟล์ที่ถูกเลือก'}
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              disableElevation
-            >
-              สร้าง
-            </Button>
-          </form>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                disableElevation
+              >
+                สร้าง
+              </Button>
+            </form>
+          </div>
         </div>
         <Footer />
         <Dialog
@@ -241,7 +243,7 @@ const CreateCourse = () => {
             </Button>
           </DialogActions>
         </Dialog>
-      </>
+      </div>
     );
   } else {
     return <p>Only admin can access this page.</p>;

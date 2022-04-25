@@ -57,7 +57,7 @@ const EditCourse = (props) => {
       } else {
         coverImageDataURL = courseData.coverImage
       }
-      
+
       const courseDataExcludeId = {
         name: courseData.name,
         description: courseData.description,
@@ -112,9 +112,9 @@ const EditCourse = (props) => {
     );
   } else if (!!auth.user && auth.user.admin) {
     return (
-      <>
+      <div className="flex flex-col h-screen justify-between">
         <Navbar />
-        <div className="max-w-screen-lg mx-auto my-5 px-5">
+        <div className="mb-auto"><div className="max-w-screen-lg mx-auto my-5 px-5">
           <div className="mt-10">
             <Link to={`/course/${courseData.id}`}>
               <span className="text-gray-400 hover:text-orange-400">
@@ -220,7 +220,7 @@ const EditCourse = (props) => {
               บันทึก
             </Button>
           </form>
-        </div>
+        </div></div>
         <Footer />
         <Dialog
           open={openDialog}
@@ -240,7 +240,7 @@ const EditCourse = (props) => {
             </Button>
           </DialogActions>
         </Dialog>
-      </>
+      </div>
     );
   } else {
     return <p>Only admin can access this page.</p>;

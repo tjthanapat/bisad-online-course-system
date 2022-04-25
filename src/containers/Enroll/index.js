@@ -143,8 +143,9 @@ const Enroll = (props) => {
     return <Navigate to={`/course/${course.id}`} replace />;
   } else {
     return (
-      <>
+      <div className="flex flex-col h-screen justify-between">
         <Navbar />
+        <div className="mb-auto">
         <div className="max-w-screen-lg mx-auto my-5 px-5">
           <h1 className="font-medium text-3xl text-orange-400 mt-16">
             ลงทะเบียนเรียนคอร์ส {course.name}
@@ -288,6 +289,8 @@ const Enroll = (props) => {
             </div>
           </div>
         </div>
+        </div>
+        
         <Footer />
         <Dialog
           open={openDialog}
@@ -307,7 +310,8 @@ const Enroll = (props) => {
             </Button>
           </DialogActions>
         </Dialog>
-      </>
+      </div>
+      
     );
   }
 };
