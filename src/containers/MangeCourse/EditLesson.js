@@ -91,109 +91,113 @@ const EditLesson = (props) => {
   } else if (!!auth.user && auth.user.admin) {
     return (
       <>
-        <Navbar />
-        <div className="max-w-screen-lg mx-auto my-5 px-5">
-          <div className="mt-10">
-            <Link to={`/course/${course.id}`}>
-              <span className="text-gray-400 hover:text-orange-400">
-                {'<'} กลับ
-              </span>
-            </Link>
-          </div>
-          <h1 className="mt-7 text-2xl font-medium">แก้ไขบทเรียน</h1>
-          <p>
-            แก้ไขบทเรียน (ไอดี: {lessonData.id}) ในคอร์ส {course.name} (ไอดี:{' '}
-            {course.id})
-          </p>
-          <form onSubmit={handleSubmitCreateLesson}>
-            <div className="my-5 space-y-3">
-              <div>
-                <label htmlFor="id">ไอดีบทเรียน</label>
-                <input
-                  type="text"
-                  className="block p-2 rounded border w-full"
-                  id="id"
-                  placeholder="ไอดีบทเรียน"
-                  value={lessonData.id}
-                  disabled
-                />
+        <div className="flex flex-col h-screen justify-between">
+          <Navbar />
+          <div className="mb-auto">
+            <div className="max-w-screen-lg mx-auto my-5 px-5">
+              <div className="mt-10">
+                <Link to={`/course/${course.id}`}>
+                  <span className="text-gray-400 hover:text-orange-400">
+                    {'<'} กลับ
+                  </span>
+                </Link>
               </div>
-              <div>
-                <label htmlFor="name">ชื่อบทเรียน</label>
-                <input
-                  type="text"
-                  className="block p-2 rounded border w-full"
-                  id="name"
-                  placeholder="ชื่อบทเรียน"
-                  value={lessonData.name}
-                  onChange={handleChangeLessonDataInput}
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="description">คำอธิบายบทเรียน</label>
-                <textarea
-                  className="block p-2 rounded border w-full"
-                  id="description"
-                  placeholder="คำอธิบายบทเรียน"
-                  rows={4}
-                  value={lessonData.description}
-                  onChange={handleChangeLessonDataInput}
-                />
-              </div>
-              <div>
-                <p>ประเภทบทเรียน</p>
-                <div>
-                  <input
-                    type="radio"
-                    id="video"
-                    value="video"
-                    name="lessonType"
-                    checked={lessonData.type === 'video'}
-                    onChange={handleChangeLessonType}
-                  />
-                  <label htmlFor="video" className="ml-2">
-                    วิดีโอ
-                  </label>
+              <h1 className="mt-7 text-2xl font-medium">แก้ไขบทเรียน</h1>
+              <p>
+                แก้ไขบทเรียน (ไอดี: {lessonData.id}) ในคอร์ส {course.name}{' '}
+                (ไอดี: {course.id})
+              </p>
+              <form onSubmit={handleSubmitCreateLesson}>
+                <div className="my-5 space-y-3">
+                  <div>
+                    <label htmlFor="id">ไอดีบทเรียน</label>
+                    <input
+                      type="text"
+                      className="block p-2 rounded border w-full"
+                      id="id"
+                      placeholder="ไอดีบทเรียน"
+                      value={lessonData.id}
+                      disabled
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="name">ชื่อบทเรียน</label>
+                    <input
+                      type="text"
+                      className="block p-2 rounded border w-full"
+                      id="name"
+                      placeholder="ชื่อบทเรียน"
+                      value={lessonData.name}
+                      onChange={handleChangeLessonDataInput}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="description">คำอธิบายบทเรียน</label>
+                    <textarea
+                      className="block p-2 rounded border w-full"
+                      id="description"
+                      placeholder="คำอธิบายบทเรียน"
+                      rows={4}
+                      value={lessonData.description}
+                      onChange={handleChangeLessonDataInput}
+                    />
+                  </div>
+                  <div>
+                    <p>ประเภทบทเรียน</p>
+                    <div>
+                      <input
+                        type="radio"
+                        id="video"
+                        value="video"
+                        name="lessonType"
+                        checked={lessonData.type === 'video'}
+                        onChange={handleChangeLessonType}
+                      />
+                      <label htmlFor="video" className="ml-2">
+                        วิดีโอ
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        id="file"
+                        value="file"
+                        name="lessonType"
+                        checked={lessonData.type === 'file'}
+                        onChange={handleChangeLessonType}
+                      />
+                      <label htmlFor="file" className="ml-2">
+                        ไฟล์
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="source">ลิงก์วิดีโอหรือไฟล์บทเรียน</label>
+                    <input
+                      type="text"
+                      className="block p-2 rounded border w-full"
+                      id="source"
+                      placeholder="ลิงก์วิดีโอหรือไฟล์บทเรียน"
+                      value={lessonData.source}
+                      onChange={handleChangeLessonDataInput}
+                      required
+                    />
+                  </div>
                 </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="file"
-                    value="file"
-                    name="lessonType"
-                    checked={lessonData.type === 'file'}
-                    onChange={handleChangeLessonType}
-                  />
-                  <label htmlFor="file" className="ml-2">
-                    ไฟล์
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label htmlFor="source">ลิงค์วิดีโอหรือไฟล์บทเรียน</label>
-                <input
-                  type="text"
-                  className="block p-2 rounded border w-full"
-                  id="source"
-                  placeholder="ลิงค์วิดีโอหรือไฟล์บทเรียน"
-                  value={lessonData.source}
-                  onChange={handleChangeLessonDataInput}
-                  required
-                />
-              </div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disableElevation
+                >
+                  บันทึก
+                </Button>
+              </form>
             </div>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              disableElevation
-            >
-              บันทึก
-            </Button>
-          </form>
+          </div>
+          <Footer />
         </div>
-        <Footer />
         <Dialog
           open={openDialog}
           onClose={handleCloseDialog}

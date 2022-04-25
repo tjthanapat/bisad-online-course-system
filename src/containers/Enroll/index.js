@@ -143,155 +143,158 @@ const Enroll = (props) => {
     return <Navigate to={`/course/${course.id}`} replace />;
   } else {
     return (
-      <div className="flex flex-col h-screen justify-between">
-        <Navbar />
-        <div className="mb-auto">
-        <div className="max-w-screen-lg mx-auto my-5 px-5">
-          <h1 className="font-medium text-3xl text-orange-400 mt-16">
-            ลงทะเบียนเรียนคอร์ส {course.name}
-          </h1>
-          <div className="mt-10 flex flex-col md:flex-row">
-            <div className="md:w-1/3 md:pr-8 mb-10">
-              <h2 className="font-medium text-2xl text-orange-400">
-                รายละเอียดคอร์ส
-              </h2>
-              <p>ชื่อคอร์ส : {course.name}</p>
-              <p>ผู้สอน : {course.instructor}</p>
-              <p className="mt-4">
-                ราคา{' '}
-                <span className="text-xl">
-                  {Number(course.price).toLocaleString('en', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </span>{' '}
-                บาท
-              </p>
-            </div>
-            <div className="md:w-2/3">
-              <h2 className="font-medium text-2xl text-orange-400">ชำระเงิน</h2>
-              <p>ชำระเงินผ่านบัตรเครดิต/เดบิต</p>
-              <form onSubmit={handleSubmitEnroll}>
-                <div className="mt-3 space-y-3">
-                  <TextField
-                    id="cardNumber"
-                    type="tel"
-                    label="หมายเลขบัตรเครดิต/เดบิต"
-                    value={paymentData.cardNumber}
-                    onChange={handleChangeCardNumber}
-                    error={cardNumberInvalid}
-                    helperText={
-                      cardNumberInvalid
-                        ? 'กรอกหมายเลขบัตรเครดิต/เดบิต 16 หลัก'
-                        : ''
-                    }
-                    inputProps={{
-                      inputMode: 'numeric',
-                      pattern: '[0-9]{16}',
-                      autoComplete: 'cc-number',
-                      maxLength: 16,
-                      placeholder: 'หมายเลขบัตรเครดิต/เดบิต',
-                    }}
-                    variant="outlined"
-                    required
-                    fullWidth
-                    sx={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
-                  />
-                  <TextField
-                    id="cardHolderName"
-                    type="text"
-                    label="ชื่อบนบัตร (ภาษาอังกฤษ)"
-                    value={paymentData.cardHolderName}
-                    onChange={handleChangeCardHolderName}
-                    error={cardHolderNameInvalid}
-                    helperText={
-                      cardHolderNameInvalid ? 'กรอกด้วยภาษาอังกฤษ' : ''
-                    }
-                    inputProps={{
-                      pattern: '[a-zA-Z ]+',
-                      placeholder: 'ชื่อบนบัตร (ภาษาอังกฤษ)',
-                    }}
-                    variant="outlined"
-                    required
-                    fullWidth
-                  />
-                  <div className="flex">
-                    <div className="w-1/2 mr-2">
-                      <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DatePicker
-                          inputFormat="MM/yyyy"
-                          views={['year', 'month']}
-                          label="วันหมดอายุ ดด/ปปปป"
-                          minDate={new Date()}
-                          value={cardExpiryDate}
-                          onChange={setCardExpiryDate}
-                          onError={handleExpiryDateError}
-                          onAccept={handleExpiryDateAccept}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              variant="outlined"
-                              fullWidth
-                              required
-                            />
-                          )}
-                        />
-                      </LocalizationProvider>
-                    </div>
-                    <div className="w-1/2">
+      <>
+        <div className="flex flex-col h-screen justify-between">
+          <Navbar />
+          <div className="mb-auto">
+            <div className="max-w-screen-lg mx-auto my-10 px-5">
+              <h1 className="font-medium text-3xl text-orange-400 mt-16">
+                ลงทะเบียนเรียนคอร์ส {course.name}
+              </h1>
+              <div className="mt-10 flex flex-col md:flex-row">
+                <div className="md:w-1/3 md:pr-8 mb-10">
+                  <h2 className="font-medium text-2xl text-orange-400">
+                    รายละเอียดคอร์ส
+                  </h2>
+                  <p>ชื่อคอร์ส : {course.name}</p>
+                  <p>ผู้สอน : {course.instructor}</p>
+                  <p className="mt-4">
+                    ราคา{' '}
+                    <span className="text-xl">
+                      {Number(course.price).toLocaleString('en', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </span>{' '}
+                    บาท
+                  </p>
+                </div>
+                <div className="md:w-2/3">
+                  <h2 className="font-medium text-2xl text-orange-400">
+                    ชำระเงิน
+                  </h2>
+                  <p>ชำระเงินผ่านบัตรเครดิต/เดบิต</p>
+                  <form onSubmit={handleSubmitEnroll}>
+                    <div className="mt-3 space-y-3">
                       <TextField
-                        id="cardSecurityCode"
+                        id="cardNumber"
                         type="tel"
-                        label="เลข CCV/CVV"
-                        value={paymentData.cardSecurityCode}
-                        onChange={handleChangeCardSecurityCode}
-                        error={cardSecurityCodeInvalid}
+                        label="หมายเลขบัตรเครดิต/เดบิต"
+                        value={paymentData.cardNumber}
+                        onChange={handleChangeCardNumber}
+                        error={cardNumberInvalid}
                         helperText={
-                          cardSecurityCodeInvalid
-                            ? 'กรอกเลข CCV/CVV 3 หลัก'
+                          cardNumberInvalid
+                            ? 'กรอกหมายเลขบัตรเครดิต/เดบิต 16 หลัก'
                             : ''
                         }
-                        variant="outlined"
                         inputProps={{
                           inputMode: 'numeric',
-                          pattern: '[0-9]{3}',
-                          maxLength: 3,
-                          placeholder: 'เลข CCV/CVV',
+                          pattern: '[0-9]{16}',
+                          autoComplete: 'cc-number',
+                          maxLength: 16,
+                          placeholder: 'หมายเลขบัตรเครดิต/เดบิต',
                         }}
+                        variant="outlined"
+                        required
+                        fullWidth
+                        sx={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}
+                      />
+                      <TextField
+                        id="cardHolderName"
+                        type="text"
+                        label="ชื่อบนบัตร (ภาษาอังกฤษ)"
+                        value={paymentData.cardHolderName}
+                        onChange={handleChangeCardHolderName}
+                        error={cardHolderNameInvalid}
+                        helperText={
+                          cardHolderNameInvalid ? 'กรอกด้วยภาษาอังกฤษ' : ''
+                        }
+                        inputProps={{
+                          pattern: '[a-zA-Z ]+',
+                          placeholder: 'ชื่อบนบัตร (ภาษาอังกฤษ)',
+                        }}
+                        variant="outlined"
                         required
                         fullWidth
                       />
+                      <div className="flex">
+                        <div className="w-1/2 mr-2">
+                          <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                              inputFormat="MM/yyyy"
+                              views={['year', 'month']}
+                              label="วันหมดอายุ ดด/ปปปป"
+                              minDate={new Date()}
+                              value={cardExpiryDate}
+                              onChange={setCardExpiryDate}
+                              onError={handleExpiryDateError}
+                              onAccept={handleExpiryDateAccept}
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  variant="outlined"
+                                  fullWidth
+                                  required
+                                />
+                              )}
+                            />
+                          </LocalizationProvider>
+                        </div>
+                        <div className="w-1/2">
+                          <TextField
+                            id="cardSecurityCode"
+                            type="tel"
+                            label="เลข CCV/CVV"
+                            value={paymentData.cardSecurityCode}
+                            onChange={handleChangeCardSecurityCode}
+                            error={cardSecurityCodeInvalid}
+                            helperText={
+                              cardSecurityCodeInvalid
+                                ? 'กรอกเลข CCV/CVV 3 หลัก'
+                                : ''
+                            }
+                            variant="outlined"
+                            inputProps={{
+                              inputMode: 'numeric',
+                              pattern: '[0-9]{3}',
+                              maxLength: 3,
+                              placeholder: 'เลข CCV/CVV',
+                            }}
+                            required
+                            fullWidth
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  disableElevation
-                  fullWidth
-                  sx={{ marginTop: '1rem' }}
-                  disabled={
-                    !paymentData.cardNumber ||
-                    !paymentData.cardHolderName ||
-                    !cardExpiryDate ||
-                    !paymentData.cardSecurityCode ||
-                    cardNumberInvalid ||
-                    cardHolderNameInvalid ||
-                    cardExpiryDateInvalid ||
-                    cardSecurityCodeInvalid
-                  }
-                >
-                  ลงทะเบียนเรียน
-                </Button>
-              </form>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      disableElevation
+                      fullWidth
+                      sx={{ marginTop: '1rem' }}
+                      disabled={
+                        !paymentData.cardNumber ||
+                        !paymentData.cardHolderName ||
+                        !cardExpiryDate ||
+                        !paymentData.cardSecurityCode ||
+                        cardNumberInvalid ||
+                        cardHolderNameInvalid ||
+                        cardExpiryDateInvalid ||
+                        cardSecurityCodeInvalid
+                      }
+                    >
+                      ลงทะเบียนเรียน
+                    </Button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
+          <Footer />
         </div>
-        </div>
-        
-        <Footer />
         <Dialog
           open={openDialog}
           onClose={handleCloseDialog}
@@ -310,8 +313,7 @@ const Enroll = (props) => {
             </Button>
           </DialogActions>
         </Dialog>
-      </div>
-      
+      </>
     );
   }
 };

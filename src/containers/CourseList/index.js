@@ -27,41 +27,16 @@ const CourseList = () => {
     getCoursesData();
   }, []);
 
-
-  
   if (loading) {
     return (
-      // <div className="flex flex-col items-center justify-center my-10 h-96">
-      //   <div className="lds-ellipsis">
-      //     <div className="orange"></div>
-      //     <div className="orange"></div>
-      //     <div className="orange"></div>
-      //     <div className="orange"></div>
-      //   </div>
-      //   <p>กำลังโหลด</p>
-        
-      // </div>
       <div className="max-w-screen-lg mx-auto mb-auto px-5">
         <div className="flex flex-col md:flex-row border rounded-2xl my-5">
           <div className="h-48 md:w-1/4">
-            <Skeleton variant="rectangular" width="100%" height="100%"/>
+            <Skeleton variant="rectangular" width="100%" height="100%" />
           </div>
           <div className="p-2 w-3/4">
-            <Skeleton  width="40%" height="20%"/>
-            <Skeleton className="my-2"  />
-            <div className="mt-5 mx-5">
-              <Skeleton variant="rectangular" width={100} height={30} />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row border rounded-2xl my-5">
-          <div className="h-48 md:w-1/4">
-            <Skeleton variant="rectangular" width="100%" height="100%"/>
-          </div>
-          <div className="p-2 w-3/4">
-            <Skeleton  width="40%" height="20%"/>
-            <Skeleton className="my-2"  />
+            <Skeleton width="40%" height="20%" />
+            <Skeleton className="my-2" />
             <div className="mt-5 mx-5">
               <Skeleton variant="rectangular" width={100} height={30} />
             </div>
@@ -69,11 +44,11 @@ const CourseList = () => {
         </div>
         <div className="flex flex-col md:flex-row border rounded-2xl my-5">
           <div className="h-48 md:w-1/4">
-            <Skeleton variant="rectangular" width="100%" height="100%"/>
+            <Skeleton variant="rectangular" width="100%" height="100%" />
           </div>
           <div className="p-2 w-3/4">
-            <Skeleton  width="40%" height="20%"/>
-            <Skeleton className="my-2"  />
+            <Skeleton width="40%" height="20%" />
+            <Skeleton className="my-2" />
             <div className="mt-5 mx-5">
               <Skeleton variant="rectangular" width={100} height={30} />
             </div>
@@ -81,19 +56,29 @@ const CourseList = () => {
         </div>
         <div className="flex flex-col md:flex-row border rounded-2xl my-5">
           <div className="h-48 md:w-1/4">
-            <Skeleton variant="rectangular" width="100%" height="100%"/>
+            <Skeleton variant="rectangular" width="100%" height="100%" />
           </div>
           <div className="p-2 w-3/4">
-            <Skeleton  width="40%" height="20%"/>
-            <Skeleton className="my-2"  />
+            <Skeleton width="40%" height="20%" />
+            <Skeleton className="my-2" />
             <div className="mt-5 mx-5">
               <Skeleton variant="rectangular" width={100} height={30} />
             </div>
           </div>
         </div>
-        
+        <div className="flex flex-col md:flex-row border rounded-2xl my-5">
+          <div className="h-48 md:w-1/4">
+            <Skeleton variant="rectangular" width="100%" height="100%" />
+          </div>
+          <div className="p-2 w-3/4">
+            <Skeleton width="40%" height="20%" />
+            <Skeleton className="my-2" />
+            <div className="mt-5 mx-5">
+              <Skeleton variant="rectangular" width={100} height={30} />
+            </div>
+          </div>
+        </div>
       </div>
-      
     );
   } else {
     return (
@@ -112,7 +97,7 @@ const CourseList = () => {
             </Link>
           </div>
         )}
-        <div className="my-5">
+        <div className="mt-5 mb-10">
           {!!courses &&
             courses.map((course) => (
               <CourseCard key={course.id} course={course} />

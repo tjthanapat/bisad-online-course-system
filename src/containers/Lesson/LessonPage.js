@@ -56,53 +56,53 @@ const LessonPage = (props) => {
       <div className="flex flex-col h-screen justify-between">
         <Navbar />
         <div className="mb-auto">
-        <div className="max-w-screen-lg mx-auto my-5 px-5">
-          <div className="mt-10">
-            <Link to={`/course/${course.id}`}>
-              <span className="text-gray-400 hover:text-orange-400">
-                {'<'} กลับหน้าคอร์สเรียน
-              </span>
-            </Link>
-          </div>
-          <h1 className="font-medium text-3xl text-orange-400 mt-5">
-            {lesson.name}
-          </h1>
-          <p className="mt-2">{lesson.description}</p>
-          <div className="mt-5">
-            {lesson.type === 'video' && (
-              <div
-                className="relative h-0 overflow-hidden max-w-full w-full"
-                style={{ paddingBottom: '56.25%' }}
-              >
-                <iframe
-                  title={lesson.name}
-                  className="absolute top-0 left-0 w-full h-full"
-                  type="text/html"
-                  src={`https://www.youtube.com/embed/${youtubeId}`}
-                  frameBorder="0"
-                  allowFullScreen={true}
-                />
-              </div>
-            )}
-            {lesson.type === 'file' && (
-              <div>
-                <p>
-                  ดาวน์โหลด:{' '}
-                  <a
-                    href={lesson.source}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-orange-400 hover:text-orange-500"
-                  >
-                    {lesson.name}
-                  </a>
-                </p>
-              </div>
-            )}
+          <div className="max-w-screen-lg mx-auto my-10 px-5">
+            <div>
+              <Link to={`/course/${course.id}`}>
+                <span className="text-gray-400 hover:text-orange-400">
+                  {'<'} กลับหน้าคอร์สเรียน
+                </span>
+              </Link>
+            </div>
+            <h1 className="font-medium text-3xl text-orange-400 mt-5">
+              {lesson.name}
+            </h1>
+            <p className="mt-2">{lesson.description}</p>
+            <div className="mt-5">
+              {lesson.type === 'video' && (
+                <div
+                  className="relative h-0 overflow-hidden max-w-full w-full"
+                  style={{ paddingBottom: '56.25%' }}
+                >
+                  <iframe
+                    title={lesson.name}
+                    className="absolute top-0 left-0 w-full h-full"
+                    type="text/html"
+                    src={`https://www.youtube.com/embed/${youtubeId}`}
+                    frameBorder="0"
+                    allowFullScreen={true}
+                  />
+                </div>
+              )}
+              {lesson.type === 'file' && (
+                <div>
+                  <p>
+                    ดาวน์โหลด:{' '}
+                    <a
+                      href={lesson.source}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-orange-400 hover:text-orange-500"
+                    >
+                      {lesson.name}
+                    </a>
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        </div>
-       
+
         <Footer />
       </div>
     );

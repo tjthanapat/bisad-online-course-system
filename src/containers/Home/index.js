@@ -28,7 +28,6 @@ const Home = () => {
           </div>
           <CourseList />
         </div>
-
         <Footer />
       </div>
     );
