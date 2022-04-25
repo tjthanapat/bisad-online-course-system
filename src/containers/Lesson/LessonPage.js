@@ -22,11 +22,11 @@ const LessonPage = (props) => {
     var regExp =
       /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
     var match = url.match(regExp);
-    return match && match[7].length == 11 ? match[7] : false;
+    return match && match[7].length === 11 ? match[7] : false;
   };
 
   useEffect(() => {
-    if (lesson.type == 'video') {
+    if (lesson.type === 'video') {
       setYoutubeId(youtubeParser(lesson.source));
     }
   }, []);
