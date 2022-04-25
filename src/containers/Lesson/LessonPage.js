@@ -4,7 +4,7 @@ import Footer from '../../components/Footer';
 import LoadingPage from '../../components/LoadingPage';
 import Navbar from '../../components/Navbar';
 import { useAuth } from '../../contexts/AuthContext';
-// import { saveLearningLog } from '../../functions/learningLogAndProgress';
+import { saveLearningLog } from '../../functions/learningLogAndProgress';
 
 const LessonPage = (props) => {
   const auth = useAuth();
@@ -16,10 +16,25 @@ const LessonPage = (props) => {
 
   const [loading, setLoading] = useState(true);
 
+  const [youtubeId, setYoutubeId] = useState('');
+
+  const youtubeParser = (url) => {
+    var regExp =
+      /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return match && match[7].length == 11 ? match[7] : false;
+  };
+
+  useEffect(() => {
+    if (lesson.type == 'video') {
+      setYoutubeId(youtubeParser(lesson.source));
+    }
+  }, []);
+
   useEffect(() => {
     const saveLog = async () => {
       try {
-        // await saveLearningLog(auth.user.uid, course.id, lesson.id);
+        await saveLearningLog(auth.user.uid, course.id, lesson.id);
         console.log('Saved learning log successfully.');
         setLoading(false);
       } catch (err) {
@@ -63,7 +78,7 @@ const LessonPage = (props) => {
                   title={lesson.name}
                   className="absolute top-0 left-0 w-full h-full"
                   type="text/html"
-                  src={lesson.source}
+                  src={`https://www.youtube.com/embed/${youtubeId}`}
                   frameBorder="0"
                   allowFullScreen={true}
                 />

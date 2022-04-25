@@ -109,7 +109,7 @@ const CreateLesson = (props) => {
               </span>
             </Link>
           </div>
-          <h1 className="mt-7 text-2xl font-medium">สร้างบทเรียนใหม่</h1>
+          <h1 className="mt-7 text-2xl font-medium">สร้างบทเรียน</h1>
           <p>
             สร้างบทเรียนในคอร์ส {course.name} (ไอดี: {course.id})
           </p>
