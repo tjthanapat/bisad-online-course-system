@@ -20,6 +20,7 @@ const LessonItem = (props) => {
           <FileIcon className="w-7 text-gray-300" />
         )}
         <h5 className="text-lg ml-5">{lesson.name}</h5>
+        {!!auth.user.admin && <span className='ml-2 text-gray-500'>(ไอดี: {lesson.id})</span>}
       </div>
       <div className="mt-2 sm:mt-0 flex justify-end items-center">
         {!auth.user.admin && enrolled && (
@@ -34,7 +35,6 @@ const LessonItem = (props) => {
             เข้าสู่บทเรียน
           </Button>
         )}
-
         {auth.user.admin && (
           <Link to={`/course/${courseId}/lesson/${lesson.id}/edit`}>
             <Button variant="contained" color="primary" disableElevation>
