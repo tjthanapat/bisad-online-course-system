@@ -11,6 +11,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import LoadingPage from '../../components/LoadingPage';
+import Logo from '../../assets/logo1.svg';
 
 const Register = () => {
   const auth = useAuth();
@@ -66,8 +67,9 @@ const Register = () => {
     return <LoadingPage />;
   } else if (success) {
     return (
-      <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center p-5">
-        <h1 className="text-4xl font-semibold text-white mb-8">Courseiku</h1>
+      <div className="bg-gradient-to-r from-orange-400  to-orange-300 min-h-screen flex flex-col items-center justify-center p-5">
+         <img className='h-30 w-60' 
+              src={Logo}/>
         <div
           className="bg-white px-5 py-8 rounded-xl shadow-xl"
           style={{ minWidth: '300px' }}
@@ -93,8 +95,9 @@ const Register = () => {
   } else {
     return (
       <>
-        <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center p-5">
-          <h1 className="text-4xl font-semibold text-white mb-8">Courseiku</h1>
+        <div className="bg-gradient-to-r from-orange-400  to-orange-300 min-h-screen flex flex-col items-center justify-center p-5">
+        <img className='h-30 w-60' 
+              src={Logo}/>
           <div
             className="bg-white px-5 py-8 rounded-xl shadow-xl"
             style={{ minWidth: '300px' }}
