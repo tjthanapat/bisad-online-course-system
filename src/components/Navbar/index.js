@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
+import Logo from '../../assets/logo.svg';
+
 const Navbar = () => {
   const auth = useAuth();
 
@@ -17,7 +19,7 @@ const Navbar = () => {
     <div className="bg-orange-400">
       <div className="max-w-screen-lg flex justify-between items-center mx-auto p-5">
         <Link to="/">
-          <h1 className="font-medium text-white text-2xl">Courseiku</h1>
+        <img className="w-48" src={Logo} alt='Courseiku'/>
         </Link>
         <button
           onClick={handleSignOut}

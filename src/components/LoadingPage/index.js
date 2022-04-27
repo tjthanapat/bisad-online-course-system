@@ -3,7 +3,7 @@ import './Loading.css';
 
 const LoadingPage = () => {
   return (
-    <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center">
+    <div className="bg-gradient-to-br from-orange-400 to-orange-300 min-h-screen flex flex-col items-center justify-center">
       <div className="lds-ellipsis">
         <div></div>
         <div></div>

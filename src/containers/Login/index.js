@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
+import Logo from '../../assets/logo.svg';
+
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -11,7 +13,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import LoadingPage from '../../components/LoadingPage';
-import Logo from '../../assets/logo1.svg';
 
 const Login = () => {
   const auth = useAuth();
@@ -54,10 +55,8 @@ const Login = () => {
   } else {
     return (
       <>
-        
-        <div className="bg-gradient-to-r from-orange-400  to-orange-300 min-h-screen flex flex-col items-center justify-center p-5">
-          <img className='h-30 w-60' 
-              src={Logo}/>
+        <div className="bg-gradient-to-br from-orange-400 to-orange-300 min-h-screen flex flex-col items-center justify-center p-5">
+          <img className="w-full max-w-xs mb-5" src={Logo} alt="Courseiku" />
           <div
             className="bg-white px-5 py-8 rounded-xl shadow-xl"
             style={{ minWidth: '300px' }}
