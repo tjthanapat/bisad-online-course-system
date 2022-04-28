@@ -3,6 +3,8 @@ import { enroll } from '../../functions/enroll';
 import { useAuth } from '../../contexts/AuthContext';
 import { Navigate, Link } from 'react-router-dom';
 
+import Logo from '../../assets/logo.svg';
+
 import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -115,8 +117,8 @@ const Enroll = (props) => {
     return <LoadingPage />;
   } else if (success) {
     return (
-      <div className="bg-orange-400 min-h-screen flex flex-col items-center justify-center p-5">
-        <h1 className="text-4xl font-semibold text-white mb-8">Courseiku</h1>
+      <div className="bg-gradient-to-br from-orange-400 to-orange-300 min-h-screen flex flex-col items-center justify-center p-5">
+        <img className="w-full max-w-xs mb-5" src={Logo} alt="Courseiku" />
         <div
           className="bg-white px-5 py-8 rounded-xl shadow-xl"
           style={{ minWidth: '300px' }}
