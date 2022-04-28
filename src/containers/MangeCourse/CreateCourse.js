@@ -101,14 +101,14 @@ const CreateCourse = () => {
           <p className="mb-5">
             คุณได้ทำการสร้างคอร์ส {courseData.name} (ไอดี: {courseData.id})
           </p>
-          <Link to="/">
+          <Link to={`/course/${courseData.id}`}>
             <Button
               variant="contained"
               color="secondary"
               disableElevation
               fullWidth
             >
-              กลับหน้ารายการคอร์สเรียน
+              ไปยังหน้าคอร์สเรียน
             </Button>
           </Link>
         </div>
