@@ -1,3 +1,14 @@
+# Courseiku
+
+Courseiku - Online Course System
+
+Created by
+- BOONYAKORN SANGUANSAK
+- BUKORREE MADTHING
+- NONTHAPAHT TASPAN
+- THANAPAT TEERARATTANYU
+- TUNLATON WONGCHAI
+
 
 # Getting Started with Create React App
 
@@ -69,7 +80,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-Hello World
-
-Hello World 2
